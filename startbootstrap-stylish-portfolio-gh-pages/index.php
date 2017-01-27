@@ -1,3 +1,14 @@
+<?php
+    extract($_REQUEST);
+
+    session_start();
+
+if (isset($SESSION['usu_id'])){
+    header("location:php/principal.php");
+} else {
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,21 +39,57 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript">
+        function Error(){
+            alert("El correo y la contraseña no coinciden");
+            document.getElementById("form1").usu_correo.style.borderColor = "red";
+            document.getElementById("form1").usu_pass.style.borderColor = "red";
+        }
+
+        function validar(){
+            var formulario = document.getElementById("form1");
+            var msg="Error:";
+
+            if (formulario.usu_correo.value==""){
+                msg += "\n El correo no puede estar vacio";
+                document.getElementById("form1").usu_correo.style.borderColor = "red";
+            }
+
+            if (formulario.usu_pass.value==""){
+                msg += "\n La contraseña no puede estar vacia";
+                document.getElementById("form1").usu_pass.style.borderColor = "red";
+            }
+        if (msg == "Error:"){
+            return true;
+            } else{
+                alert(msg);
+                return false;
+            }
+        }
+
+    </script>
 
 </head>
+<?php
+$body = "<body";
+if (isset($error)){
+    $body .= " onload='Error();'>";
+} else {
+    $body .= ">";
+}
 
-<body>
-
+echo "$body";
+?>
     <!-- Navigation -->
     <div class="navegador">
         <div class="col-lg-4">
             <img src="img/header.png" width="350" >
         </div>
-        <div class="col-lg-offset-8 login">
-            <form action="login.proc.php" method="get">
+        <div class="col-lg-offset-7 login">
+            <form id="form1" action="php/login.proc.php" method="get" onsubmit="return validar();">
             Iniciar sesión:
-                <input type="text" name="nomre" placeholder="Tu email">
-                <input type="password" name="pass" placeholder="Contraseña">
+                <input type="text" name="usu_correo" placeholder="Tu email" <?php if(isset($usu)){ echo "value='$usu'";} ?> onfocus="this.style.borderColor=null" maxlength="50">
+                <input type="password" name="usu_pass" placeholder="Contraseña" onfocus="this.style.borderColor=null" maxlength="15">
                 <input type="submit" name="entrar" value="Entrar">
             </form>
         </div>
@@ -336,3 +383,6 @@
 </body>
 
 </html>
+<?php 
+}
+?>
