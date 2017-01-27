@@ -11,7 +11,7 @@ $num_usuarios = mysqli_query($conexion, $sql);
 	if(mysqli_num_rows($num_usuarios)==1){
 		session_start();
 		while ($num_usuario = mysqli_fetch_array($num_usuarios)) {
-					$SESSION['usu_id'] = $num_usuario['usu_id'];
+					$_SESSION['usu_id'] = $num_usuario['usu_id'];
 				}		
 			header ("location:principal.php");
 	} else{
