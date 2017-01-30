@@ -12,6 +12,9 @@ $sql_usuarios="SELECT * FROM tbl_usuario WHERE usu_id=$usu_id";
 
 $usuarios = mysqli_query($conexion, $sql_usuarios);
 
+$sql_contactos = "SELECT * FROM tbl_contactos WHERE usu_id = $usu_id";
+$contactos = mysqli_query($conexion, $sql_contactos);
+
 while ($usuario=mysqli_fetch_array($usuarios)) {
 	
 	$direccion = $usuario['usu_dir_casa'];
@@ -30,15 +33,68 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
-    
+    <script type="text/javascript">
+         function initMap() {
+                  
+
+                 var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 17,
+                    center: {lat: -34.397, lng: 150.644}
+                  });
+
+                var geocoder = new google.maps.Geocoder();
+                  geocodeAddress(geocoder, map);
+                }
+
+                function geocodeAddress(geocoder, resultsMap) {
+                  var address = "<?php echo$direccion; ?>";
+                  geocoder.geocode({'address': address}, function(results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                      resultsMap.setCenter(results[0].geometry.location);
+
+
+
+                  var contentString = '<div><p>Mi Casa</p></div>';
+
+
+                      var infowindow = new google.maps.InfoWindow({
+                      content: contentString
+                      });
+
+                      var marker = new google.maps.Marker({
+                        map: resultsMap,
+                        animation: google.maps.Animation.BOUNCE,
+                        position: results[0].geometry.location,
+                        icon: "../img/icon-casa.png",
+                      });
+
+
+                      marker.addListener('click', function() {
+                      infowindow.open(map, marker);
+                      });
+
+                    } else {
+                      alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                  });
+                }
+    </script>
+    <script async defer
+                      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSz41JPaWeB_ZMOLjiyhXQOwlLr4LYnOA&callback=initMap">
+                    </script>
   </head>
   <body>
     <section id="ejemplo" class="ejemplo" style="font-size: 15px;">
 
             <div class="ejemplo-panel">
                 <div class="ejemplo-panel-datos">
+<<<<<<< HEAD
                     <div style="width: 30%; height: 100%; float: left; padding-top: 10%; padding-left: 10%;">
                         <div class="circulo">
+=======
+                    <div style="width: 30%; height: 100%; float: left; padding-top: 10%; padding-left: 2%;">
+                        <div class="circulo" >
+>>>>>>> origin/master
                             M
                         </div>
                     </div>
@@ -102,48 +158,120 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     </div>   
                 </div>
                 <div class="ejemplo-panel-contactos" style="overflow-y: scroll;">
+                <?php
+                if (mysqli_num_rows($contactos)==0){
+                    echo "Aún no has añadido ningún contacto";
+                } else {
+                    
+                ?>
+
                     <div class="ejemplo-panel-contactos-grupo">
                         <i class="fa fa-home fa-lg" aria-hidden="true"></i>&nbsp;Familia
                     </div>
-                    <div class="ejemplo-panel-contactos-contacto">
-                        <div class="col-sm-offset-1 col-sm-8">
-                                Mi hermano 
-                        </div>
-                        <a href="#ejemplo"><div class="col-sm-1">
-                            <i class="fa fa-pencil fa-lg" aria-hidden="true" title="Editar"></i>
-                        </div></a>
-                        <a href="#ejemplo"><div class="col-sm-1">
-                            <i class="fa fa-trash fa-lg" aria-hidden="true" title="Eliminar"></i>
-                        </div></a>
-                    </div>
+<?php
+                $tipo = "Familia";
+                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo'";
+                $familias = mysqli_query($conexion, $sql_familia);
+                if (mysqli_num_rows($familias)>0){
+                    while ($familia = mysqli_fetch_array($familias)) {
+                      
+                            echo "<div class='ejemplo-panel-contactos-contacto'>";
+                            echo "<div class='col-sm-offset-1 col-sm-8'>";
+                            echo "$familia[cont_nombre]";
+                            echo "</div>";
+                            echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
+                            echo "</div></a>";
+                            echo "<a href='eliminar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo  "<i class='fa fa-trash fa-lg' aria-hidden='true' title='Eliminar'></i>";
+                            echo "</div></a>";
+                            echo "</div>";
 
-
-                    <div class="ejemplo-panel-contactos-contacto">
-                        <div class="col-sm-offset-1 col-sm-8">
-                                Mi papá
-                        </div>
-                        <a href="#ejemplo"><div class="col-sm-1">
-                            <i class="fa fa-pencil fa-lg" aria-hidden="true" title="Editar"></i>
-                        </div></a>
-                        <a href="#ejemplo"><div class="col-sm-1">
-                            <i class="fa fa-trash fa-lg" aria-hidden="true" title="Eliminar"></i>
-                        </div></a>
-                    </div>
-
-
+                        }
+                    }
+?>
 
                     <div class="ejemplo-panel-contactos-grupo">
                         <i class="fa fa-smile-o fa-lg" aria-hidden="true"></i>&nbsp;Amigos
                     </div>
+                    <?php
+                $tipo = "Amigos";
+                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo'";
+                $familias = mysqli_query($conexion, $sql_familia);
+                if (mysqli_num_rows($familias)>0){
+                    while ($familia = mysqli_fetch_array($familias)) {
+                      
+                            echo "<div class='ejemplo-panel-contactos-contacto'>";
+                            echo "<div class='col-sm-offset-1 col-sm-8'>";
+                            echo "$familia[cont_nombre]";
+                            echo "</div>";
+                            echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
+                            echo "</div></a>";
+                            echo "<a href='eliminar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo  "<i class='fa fa-trash fa-lg' aria-hidden='true' title='Eliminar'></i>";
+                            echo "</div></a>";
+                            echo "</div>";
+
+                        }
+                    }
+?>
                     <div class="ejemplo-panel-contactos-grupo">
                         <i class="fa fa-briefcase " aria-hidden="true"></i>&nbsp;Trabajo
                     </div>
+                    <?php
+                $tipo = "Trabajo";
+                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo'";
+                $familias = mysqli_query($conexion, $sql_familia);
+                if (mysqli_num_rows($familias)>0){
+                    while ($familia = mysqli_fetch_array($familias)) {
+                      
+                            echo "<div class='ejemplo-panel-contactos-contacto'>";
+                            echo "<div class='col-sm-offset-1 col-sm-8'>";
+                            echo "$familia[cont_nombre]";
+                            echo "</div>";
+                            echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
+                            echo "</div></a>";
+                            echo "<a href='eliminar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo  "<i class='fa fa-trash fa-lg' aria-hidden='true' title='Eliminar'></i>";
+                            echo "</div></a>";
+                            echo "</div>";
+
+                        }
+                    }
+?>
                     <div class="ejemplo-panel-contactos-grupo">
                         <i class="fa fa-users " aria-hidden="true"></i>&nbsp;Otro
                     </div>
-                </div>
-            </div>
+                    <?php
+                $tipo = "Otro";
+                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo'";
+                $familias = mysqli_query($conexion, $sql_familia);
+                if (mysqli_num_rows($familias)>0){
+                    while ($familia = mysqli_fetch_array($familias)) {
+                      
+                            echo "<div class='ejemplo-panel-contactos-contacto'>";
+                            echo "<div class='col-sm-offset-1 col-sm-8'>";
+                            echo "$familia[cont_nombre]";
+                            echo "</div>";
+                            echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
+                            echo "</div></a>";
+                            echo "<a href='eliminar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo  "<i class='fa fa-trash fa-lg' aria-hidden='true' title='Eliminar'></i>";
+                            echo "</div></a>";
+                            echo "</div>";
 
+                        }
+                    }
+?>
+                </div>
+
+            </div>
+<?php
+    }
+?>
             
 
             <div class="ejemplo-geo">
