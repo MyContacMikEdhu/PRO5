@@ -3,7 +3,7 @@ include 'conexion.php';
 
 extract($_REQUEST);
 
-$sql = "SELECT * FROM tbl_usuario WHERE usu_correo='$usu_correo' AND usu_pass='$usu_pass'";
+$sql = "SELECT * FROM tbl_usuario WHERE usu_correo='$usu_correo' AND usu_pass='$usu_pass' AND usu_estado='1'";
 echo "$sql";
 
 $num_usuarios = mysqli_query($conexion, $sql);

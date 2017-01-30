@@ -78,6 +78,15 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     }
                   });
                 }
+
+                function confirmar(){
+                   var confirmar = confirm("Estas seguro de que quieres eliminar este contacto");
+                    if (!confirmar){
+                        return false;
+                    }
+                }
+
+
     </script>
     <script async defer
                       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSz41JPaWeB_ZMOLjiyhXQOwlLr4LYnOA&callback=initMap">
@@ -88,8 +97,9 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
 
             <div class="ejemplo-panel">
                 <div class="ejemplo-panel-datos">
-                    <div style="width: 30%; height: 100%; float: left; padding-top: 10%; padding-left: 2%;">
-                        <div class="circulo" >
+                    <div style="width: 30%; height: 100%; float: left; padding-top: 10%; padding-left: 10%;">
+                        <div class="circulo">
+
                             M
                         </div>
                     </div>
@@ -136,13 +146,13 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                    <div class="col-sm-offset-1 col-sm-11">
                         <form>
                         &nbsp;&nbsp;&nbsp;
-                           <input type="text" name="buscar" placeholder="Buscar" style="width: 200px;height: 32px;">
+                           <input type="text" name="buscar" placeholder="Buscar" style="width:60%;height: 32px;">
                            <button class="btn btn-dark" name="entrar" style="height: 32px;"><i class="fa fa-search" aria-hidden="true"></i></button>
                        </form>
                    </div>
                 </div>
                 <div class="ejemplo-panel-opcion2">
-                    <div class="col-sm-offset-1 col-sm-10">
+                    <div class="col-sm-12">
                         <form>
                             &nbsp;&nbsp;&nbsp;<input type="checkbox" name="grupo" value="familia">Familia&nbsp;&nbsp;
                             <input type="checkbox" name="grupo" value="amigos">Amigos&nbsp;&nbsp;
@@ -157,6 +167,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                 if (mysqli_num_rows($contactos)==0){
                     echo "<br>";
                     echo "&nbsp;&nbsp;Aún no has añadido ningún contacto";
+
                     echo "</div>";
                 } else {
                     
@@ -179,7 +190,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                             echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
                             echo "</div></a>";
-                            echo "<a href='eliminar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo "<a href='eliminar.proc.php?id=$familia[cont_id]' onclick='return confirmar()'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-trash fa-lg' aria-hidden='true' title='Eliminar'></i>";
                             echo "</div></a>";
                             echo "</div>";
@@ -205,7 +216,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                             echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
                             echo "</div></a>";
-                            echo "<a href='eliminar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo "<a href='eliminar.proc.php?id=$familia[cont_id]' onclick='return confirmar()'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-trash fa-lg' aria-hidden='true' title='Eliminar'></i>";
                             echo "</div></a>";
                             echo "</div>";
@@ -230,7 +241,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                             echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
                             echo "</div></a>";
-                            echo "<a href='eliminar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo "<a href='eliminar.proc.php?id=$familia[cont_id]' onclick='return confirmar()'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-trash fa-lg' aria-hidden='true' title='Eliminar'></i>";
                             echo "</div></a>";
                             echo "</div>";
@@ -255,7 +266,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                             echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
                             echo "</div></a>";
-                            echo "<a href='eliminar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo "<a href='eliminar.proc.php?id=$familia[cont_id]' onclick='return confirmar()' ><div class='col-sm-1'>";
                             echo  "<i class='fa fa-trash fa-lg' aria-hidden='true' title='Eliminar'></i>";
                             echo "</div></a>";
                             echo "</div>";
@@ -268,13 +279,12 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     }
 ?>
             </div>
-
             
 
             <div class="ejemplo-geo">
                 <div class="ejemplo-geo-opciones">
                     <div class="col-sm-6">
-                        <img src="../img/header1.png" width="35%">
+                        <img src="../img/header1.png" width="30%">
                     </div>
                     <div class="col-sm-2" style="padding-top: 2%;">
                          <a href="#ejemplo" class="btn btn-dark" style="height: 32px;"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>&nbsp;Agregar contacto</a>

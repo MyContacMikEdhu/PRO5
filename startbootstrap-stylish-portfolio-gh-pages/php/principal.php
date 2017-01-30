@@ -13,7 +13,6 @@ $sql_usuarios="SELECT * FROM tbl_usuario WHERE usu_id=$usu_id";
 $usuarios = mysqli_query($conexion, $sql_usuarios);
 
 while ($usuario=mysqli_fetch_array($usuarios)) {
-	echo "Hola $usuario[usu_nombre] $usuario[usu_apellidos]";
 	$direccion = $usuario['usu_dir_casa'];
 }
 ?>
