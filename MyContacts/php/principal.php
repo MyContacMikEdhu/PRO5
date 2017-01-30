@@ -225,8 +225,7 @@ function buscador(){
                     </div>
 <?php
                 $tipo = "Familia";
-                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo'".;
-                echo "<span id='respuesta'></span>" ."";
+                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo'";
                 $familias = mysqli_query($conexion, $sql_familia);
                 if (mysqli_num_rows($familias)>0){
                     while ($familia = mysqli_fetch_array($familias)) {
