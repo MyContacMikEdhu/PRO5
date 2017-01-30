@@ -17,6 +17,9 @@ $contactos = mysqli_query($conexion, $sql_contactos);
 
 while ($usuario=mysqli_fetch_array($usuarios)) {
 	
+    $nombre = $usuario['usu_nombre'];
+    $apellido = $usuario['usu_apellidos'];
+    $email = $usuario['usu_correo'];
 	$direccion = $usuario['usu_dir_casa'];
 }
 ?>
@@ -39,6 +42,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <script type="text/javascript">
+
          function initMap() {
                   
 
@@ -104,8 +108,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                 <div class="ejemplo-panel-datos">
                     <div style="width: 30%; height: 100%; float: left; padding-top: 10%; padding-left: 10%;">
                         <div class="circulo">
-
-                            M
+                            <?php echo strtoupper($nombre[0]); ?>
                         </div>
                     </div>
                     <div style="width: 70%; height: 100%; float: left;">
@@ -117,7 +120,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                                 <i class="fa fa-user fa-lg" aria-hidden="true"></i>
                             </div>
                             <div class="col-sm-8">
-                                Tu nombre y apellido
+                                <?php echo $nombre." ".$apellido; ?>
                             </div>
                         </div>
                     </div>
@@ -127,7 +130,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                                 <i class="fa fa-at fa-lg" aria-hidden="true"></i>
                             </div>
                             <div class="col-sm-8">
-                                email@ejemplo.com
+                                <?php echo $email; ?>
                             </div>
                         </div>
                     </div>    

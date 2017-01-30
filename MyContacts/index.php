@@ -138,7 +138,6 @@ echo "$body";
         <div class="col-sm-9">
             <div class="login">
                 <form id="form1" action="php/login.proc.php" method="POST" onsubmit="return validar();">
-            Iniciar sesión:
                 <input type="text" name="usu_correo" placeholder="Tu email" <?php if(isset($usu)){ echo "value='$usu'";} ?> onfocus="this.style.borderColor=null" maxlength="50">
                 <input type="password" name="usu_pass" placeholder="Contraseña" onfocus="this.style.borderColor=null" maxlength="15">
 
