@@ -1,3 +1,13 @@
+<?php
+    extract($_REQUEST);
+
+    session_start();
+
+if (isset($SESSION['usu_id'])){
+    header("location:php/principal.php");
+} else {
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -75,52 +85,50 @@
                     }
                   });
                 }
+
+         function Error(){
+            alert("El correo y la contraseña no coinciden");
+            document.getElementById("form1").usu_correo.style.borderColor = "red";
+            document.getElementById("form1").usu_pass.style.borderColor = "red";
+        }
+
+        function validar(){
+            var formulario = document.getElementById("form1");
+            var msg="Error:";
+
+            if (formulario.usu_correo.value==""){
+                msg += "\n El correo no puede estar vacio";
+                document.getElementById("form1").usu_correo.style.borderColor = "red";
+            }
+
+            if (formulario.usu_pass.value==""){
+                msg += "\n La contraseña no puede estar vacia";
+                document.getElementById("form1").usu_pass.style.borderColor = "red";
+            }
+        if (msg == "Error:"){
+            return true;
+            } else{
+                alert(msg);
+                return false;
+            }
+        }
                     </script>
                     <script async defer
                       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSz41JPaWeB_ZMOLjiyhXQOwlLr4LYnOA&callback=initMap">
                     </script>
 
-                    <script type="text/javascript">
-
-                function cargaVariasVeces(){
-
-                    document.getElementById("comprobar").addEventListener("click",descargaArchivo);
-
-                }
-
-                function descargaArchivo() {
-                  // Obtener la instancia del objeto XMLHttpRequest
-                  if(window.XMLHttpRequest) {
-                    peticion_http = new XMLHttpRequest();
-                  }
-                  else if(window.ActiveXObject) {
-                    peticion_http = new ActiveXObject("Microsoft.XMLHTTP");
-                  }
-
-                  // Preparar la funcion de respuesta
-                  peticion_http.onreadystatechange = muestraContenido;
-
-                  // Realizar peticion HTTP
-                  peticion_http.open('GET', 'comprobacion.php', true);
-                  peticion_http.send(null);
-
-                  function muestraContenido() {
-                    if(peticion_http.readyState == 4) {
-                      if(peticion_http.status == 200) {
-
-                        //alert(peticion_http.responseText);
-
-                        document.getElementById("disponibilidad").innerHTML=peticion_http.responseText;
-                      }
-                    }
-                  }
-                }
-
-                window.onload = cargaVariasVeces;
-                </script>
 </head>
 
-<body>
+<?php
+$body = "<body";
+if (isset($error)){
+    $body .= " onload='Error();'>";
+} else {
+    $body .= ">";
+}
+
+echo "$body";
+?>
 
     <!-- Navigation -->
     <div class="navegador">
@@ -129,10 +137,11 @@
         </div>
         <div class="col-sm-9">
             <div class="login">
-                <form action="login.proc.php" method="get">
-                
-                    <input type="text" name="usu_nombre" placeholder="Tu email">
-                    <input type="password" name="usu_pass" placeholder="Contraseña">
+                <form id="form1" action="php/login.proc.php" method="POST" onsubmit="return validar();">
+            Iniciar sesión:
+                <input type="text" name="usu_correo" placeholder="Tu email" <?php if(isset($usu)){ echo "value='$usu'";} ?> onfocus="this.style.borderColor=null" maxlength="50">
+                <input type="password" name="usu_pass" placeholder="Contraseña" onfocus="this.style.borderColor=null" maxlength="15">
+
                     <button class="btn btn-dark" name="entrar" style="height: 32px;">Entrar</button>
                 </form>
             </div>
@@ -428,3 +437,6 @@
 </body>
 
 </html>
+<?php
+}
+?>
