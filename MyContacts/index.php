@@ -3,7 +3,7 @@
 
     session_start();
 
-if (isset($SESSION['usu_id'])){
+if (isset($_SESSION['usu_id'])){
     header("location:php/principal.php");
 } else {
 

@@ -85,53 +85,60 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                 }
 
                 function confirmar(){
-                   var confirmar = confirm("Estas seguro de que quieres eliminar este contacto");
+                   var confirmar = confirm("Estas seguro de que quieres eliminar este contacto?");
                     if (!confirmar){
                         return false;
                     }
                 }
 
-var READY_STATE_COMPLETE=4;
-var peticion_http = null;
- 
-function inicializa_xhr() {
-  if(window.XMLHttpRequest) {
-    return new XMLHttpRequest(); 
-  }
-  else if(window.ActiveXObject) {
-    return new ActiveXObject("Microsoft.XMLHTTP");
-  } 
-}
- 
-function crea_query_string() {
-  var busca = document.getElementById("buscador"); 
-  return "palabra=" + encodeURIComponent(busca.value) +
-    
-}
- 
-function buscar() {
-  peticion_http = inicializa_xhr();
-  if(peticion_http) {
-    peticion_http.onreadystatechange = procesaRespuesta;
-    peticion_http.open("POST", "buscar.php", true);
- 
-    peticion_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    var query_string = crea_query_string();
-    peticion_http.send(query_string);
-  }
-}
- 
-function procesaRespuesta() {
-  if(peticion_http.readyState == READY_STATE_COMPLETE) {
-    if(peticion_http.status == 200) {
-      document.getElementById("respuesta").innerHTML = peticion_http.responseText;
-    }
-  }
-}
- 
-function buscador(){
-    document.getElementById("buscador").onkeypress = buscar;
-};
+                function darDeBaja(){
+                    var confirmar = confirm("Estas seguro de que quieres darte de baja?");
+                    if (!confirmar){
+                        return false;
+                    }
+                }
+
+        var READY_STATE_COMPLETE=4;
+        var peticion_http = null;
+         
+        function inicializa_xhr() {
+          if(window.XMLHttpRequest) {
+            return new XMLHttpRequest(); 
+          }
+          else if(window.ActiveXObject) {
+            return new ActiveXObject("Microsoft.XMLHTTP");
+          } 
+        }
+         
+        function crea_query_string() {
+          var busca = document.getElementById("buscador"); 
+          return "palabra=" + encodeURIComponent(busca.value) +
+            
+        }
+         
+        function buscar() {
+          peticion_http = inicializa_xhr();
+          if(peticion_http) {
+            peticion_http.onreadystatechange = procesaRespuesta;
+            peticion_http.open("POST", "buscar.php", true);
+         
+            peticion_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            var query_string = crea_query_string();
+            peticion_http.send(query_string);
+          }
+        }
+         
+        function procesaRespuesta() {
+          if(peticion_http.readyState == READY_STATE_COMPLETE) {
+            if(peticion_http.status == 200) {
+              document.getElementById("respuesta").innerHTML = peticion_http.responseText;
+            }
+          }
+        }
+         
+        function buscador(){
+            document.getElementById("buscador").onkeypress = buscar;
+        };
 
 
     </script>
@@ -343,7 +350,7 @@ function buscador(){
   <span class="caret"></span></button>
   <ul class="dropdown-menu">
     <li><a href="#">Editar Cuenta</a></li>
-    <li><a href="#">Darse de baja</a></li>
+    <?php echo "<li><a href='baja.proc.php?id=$usu_id' onclick='darDeBaja();'>Darse de baja</a></li>";?>
   </ul>
 </div>
                     </div>
