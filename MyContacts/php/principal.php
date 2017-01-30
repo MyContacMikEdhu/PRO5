@@ -13,7 +13,7 @@ $sql_usuarios="SELECT * FROM tbl_usuario WHERE usu_id=$usu_id";
 $usuarios = mysqli_query($conexion, $sql_usuarios);
 
 while ($usuario=mysqli_fetch_array($usuarios)) {
-	echo "Hola $usuario[usu_nombre] $usuario[usu_apellidos]";
+	
 	$direccion = $usuario['usu_dir_casa'];
 }
 ?>
@@ -23,81 +23,151 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     <title>My Contacts</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 60%;
-        margin-left: 30%;
-      }
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../css/stylish-portfolio.css" rel="stylesheet">
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
     
-    </style>
   </head>
   <body>
-    <div id="map"></div>
-    <script>
-      function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 17,
-          center: {lat: -34.397, lng: 150.644}
-        });
-        var geocoder = new google.maps.Geocoder();
+    <section id="ejemplo" class="ejemplo" style="font-size: 15px;">
 
-          geocodeAddress(geocoder, map);
-      }
+            <div class="ejemplo-panel">
+                <div class="ejemplo-panel-datos">
+                    <div style="width: 30%; height: 100%; float: left; padding-top: 10%; padding-left: 2%;">
+                        <div class="circulo">
+                            M
+                        </div>
+                    </div>
+                    <div style="width: 70%; height: 100%; float: left;">
+                    <div style="width: 100%; height: 25%"></div>
+                    <div style="width: 100%; height: 25%;">
+                        <div class="row">
 
-      function geocodeAddress(geocoder, resultsMap) {
-        var address = '<?php echo$direccion;?>';
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-              var contentString = '<div id="content">'+
-                '<div id="siteNotice">'+
-                '</div>'+
-                '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-                '<img src="../img/header.png"/>'+
-                '<div id="bodyContent">'+
-                '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-                'sandstone rock formation in the southern part of the '+
-                'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-                'south west of the nearest large town, Alice Springs; 450&#160;km '+
-                '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-                'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-                'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-                'Aboriginal people of the area. It has many springs, waterholes, '+
-                'rock caves and ancient paintings. Uluru is listed as a World '+
-                'Heritage Site.</p>'+
-                '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-                'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-                '(last visited June 22, 2009).</p>'+
-                '</div>'+
-                '</div>';
+                            <div class="col-sm-offset-1 col-sm-1 ">
+                                <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-sm-8">
+                                Tu nombre y apellido
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 100%; height: 25%">
+                        <div class="row">
+                            <div class="col-sm-offset-1 col-sm-1 ">
+                                <i class="fa fa-at fa-lg" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-sm-8">
+                                email@ejemplo.com
+                            </div>
+                        </div>
+                    </div>    
+                    <div style="width: 100%; height: 25%">
+                        <div class="row">
+                            <div class="col-sm-offset-1 col-sm-1 ">
+                                <i class="fa fa-phone fa-lg" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-sm-8">
+                                987 654 321
+                            </div>
+                        </div>
+                    </div>    
+                        
 
-            var infowindow = new google.maps.InfoWindow({
-              content: contentString
-            });
+                    </div>
+                    
+                </div>
+                <div class="ejemplo-panel-opcion">
+                <br>
+                   <div class="col-sm-offset-1 col-sm-11">
+                        <form>
+                        &nbsp;&nbsp;&nbsp;
+                           <input type="text" name="buscar" placeholder="Buscar" style="width: 200px;height: 32px;">
+                           <button class="btn btn-dark" name="entrar" style="height: 32px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                       </form>
+                   </div>
+                </div>
+                <div class="ejemplo-panel-opcion2">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <form>
+                            &nbsp;&nbsp;&nbsp;<input type="checkbox" name="grupo" value="familia">Familia&nbsp;&nbsp;
+                            <input type="checkbox" name="grupo" value="amigos">Amigos&nbsp;&nbsp;
+                            <input type="checkbox" name="grupo" value="trabajo">Trabajo&nbsp;&nbsp;
+                            <input type="checkbox" name="grupo" value="otro">Otro
 
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              draggable: true,
-              animation: google.maps.Animation.BOUNCE,
-              position: results[0].geometry.location,
-              title: "Tu casa",
-              }); 
+                        </form>
+                    </div>   
+                </div>
+                <div class="ejemplo-panel-contactos" style="overflow-y: scroll;">
+                    <div class="ejemplo-panel-contactos-grupo">
+                        <i class="fa fa-home fa-lg" aria-hidden="true"></i>&nbsp;Familia
+                    </div>
+                    <div class="ejemplo-panel-contactos-contacto">
+                        <div class="col-sm-offset-1 col-sm-8">
+                                Mi hermano 
+                        </div>
+                        <a href="#ejemplo"><div class="col-sm-1">
+                            <i class="fa fa-pencil fa-lg" aria-hidden="true" title="Editar"></i>
+                        </div></a>
+                        <a href="#ejemplo"><div class="col-sm-1">
+                            <i class="fa fa-trash fa-lg" aria-hidden="true" title="Eliminar"></i>
+                        </div></a>
+                    </div>
 
-              marker.addListener('click', function() {
-              infowindow.open(map, marker);
-            });
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-        });
 
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYYKT7N9EkuWSPDh3btcuwF2iGeg3w7co&callback=initMap">
-    </script>
-	<a href="logout.proc.php">Pulsame</a>
+                    <div class="ejemplo-panel-contactos-contacto">
+                        <div class="col-sm-offset-1 col-sm-8">
+                                Mi papá
+                        </div>
+                        <a href="#ejemplo"><div class="col-sm-1">
+                            <i class="fa fa-pencil fa-lg" aria-hidden="true" title="Editar"></i>
+                        </div></a>
+                        <a href="#ejemplo"><div class="col-sm-1">
+                            <i class="fa fa-trash fa-lg" aria-hidden="true" title="Eliminar"></i>
+                        </div></a>
+                    </div>
+
+
+
+                    <div class="ejemplo-panel-contactos-grupo">
+                        <i class="fa fa-smile-o fa-lg" aria-hidden="true"></i>&nbsp;Amigos
+                    </div>
+                    <div class="ejemplo-panel-contactos-grupo">
+                        <i class="fa fa-briefcase " aria-hidden="true"></i>&nbsp;Trabajo
+                    </div>
+                    <div class="ejemplo-panel-contactos-grupo">
+                        <i class="fa fa-users " aria-hidden="true"></i>&nbsp;Otro
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="ejemplo-geo">
+                <div class="ejemplo-geo-opciones">
+                    <div class="col-sm-6">
+                        <img src="../img/header1.png" width="180px">
+                    </div>
+                    <div class="col-sm-2" style="padding-top: 2%;">
+                         <a href="#ejemplo" class="btn btn-dark" style="height: 32px;"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>&nbsp;Agregar contacto</a>
+                    </div>
+                    <div class="col-sm-2" style="padding-top: 2%;">
+                         <a href="#ejemplo" class="btn btn-dark"  style="height: 32px;"><i class="fa fa-cog fa-lg" aria-hidden="true"></i>&nbsp;Configuración</a>
+                    </div>
+                    <div class="col-sm-2" style="padding-top: 2%;">
+                         <a href="logout.proc.php" class="btn btn-exit"  style="height: 32px;"><i class="fa fa-power-off fa-lg" aria-hidden="true"></i>&nbsp;Cerrar sesión</a>
+                    </div>
+                </div>
+
+                <div id="map" class="ejemplo-geo-mapa">
+                    
+                </div>
+            </div>
+
+    </section>
+
 </body>
 </html>
