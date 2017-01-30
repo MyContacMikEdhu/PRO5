@@ -37,7 +37,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
 
             <div class="ejemplo-panel">
                 <div class="ejemplo-panel-datos">
-                    <div style="width: 30%; height: 100%; float: left; padding-top: 10%; padding-left: 2%;">
+                    <div style="width: 30%; height: 100%; float: left; padding-top: 10%; padding-left: 10%;">
                         <div class="circulo">
                             M
                         </div>
@@ -85,13 +85,13 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                    <div class="col-sm-offset-1 col-sm-11">
                         <form>
                         &nbsp;&nbsp;&nbsp;
-                           <input type="text" name="buscar" placeholder="Buscar" style="width: 200px;height: 32px;">
+                           <input type="text" name="buscar" placeholder="Buscar" style="width:60%;height: 32px;">
                            <button class="btn btn-dark" name="entrar" style="height: 32px;"><i class="fa fa-search" aria-hidden="true"></i></button>
                        </form>
                    </div>
                 </div>
                 <div class="ejemplo-panel-opcion2">
-                    <div class="col-sm-offset-1 col-sm-10">
+                    <div class="col-sm-12">
                         <form>
                             &nbsp;&nbsp;&nbsp;<input type="checkbox" name="grupo" value="familia">Familia&nbsp;&nbsp;
                             <input type="checkbox" name="grupo" value="amigos">Amigos&nbsp;&nbsp;
@@ -149,7 +149,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
             <div class="ejemplo-geo">
                 <div class="ejemplo-geo-opciones">
                     <div class="col-sm-6">
-                        <img src="../img/header1.png" width="180px">
+                        <img src="../img/header1.png" width="30%">
                     </div>
                     <div class="col-sm-2" style="padding-top: 2%;">
                          <a href="#ejemplo" class="btn btn-dark" style="height: 32px;"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>&nbsp;Agregar contacto</a>
