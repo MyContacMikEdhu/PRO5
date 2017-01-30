@@ -99,6 +99,7 @@
   height: 10%;
   padding-top: 5%;
   border-bottom: 1px solid black;
+  background-color: #EFF0F1;
 }
 
 .ejemplo-geo {
@@ -130,4 +131,30 @@
   vertical-align: middle;
   border-radius: 50%;
   border: 3px solid black;
+}
+
+.sel-cont {
+  background-color: #1f1f1f;
+}
+
+a {
+  color: black;
+}
+
+a:hover,
+a:focus,
+a:active {
+    color: #DC4A3D;
+
+
+}
+.cont-sel {
+    color: black;
+}
+
+.cont-sel:hover,
+.cont-sel:focus,
+.cont-sel:active {
+    color: #DC4A3D;
+    font-weight: bold;
 }

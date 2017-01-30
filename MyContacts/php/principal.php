@@ -155,7 +155,9 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                 <div class="ejemplo-panel-contactos" style="overflow-y: scroll;">
                 <?php
                 if (mysqli_num_rows($contactos)==0){
-                    echo "Aún no has añadido ningún contacto";
+                    echo "<br>";
+                    echo "&nbsp;&nbsp;Aún no has añadido ningún contacto";
+                    echo "</div>";
                 } else {
                     
                 ?>
@@ -171,9 +173,9 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href=''><div class='col-sm-offset-1 col-sm-8'>";
                             echo "$familia[cont_nombre]";
-                            echo "</div>";
+                            echo "</div></a>";
                             echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
                             echo "</div></a>";
@@ -197,9 +199,9 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href=''><div class='col-sm-offset-1 col-sm-8'>";
                             echo "$familia[cont_nombre]";
-                            echo "</div>";
+                            echo "</div></a>";
                             echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
                             echo "</div></a>";
@@ -222,9 +224,9 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href=''><div class='col-sm-offset-1 col-sm-8'>";
                             echo "$familia[cont_nombre]";
-                            echo "</div>";
+                            echo "</div></a>";
                             echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
                             echo "</div></a>";
@@ -247,9 +249,9 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href=''><div class='col-sm-offset-1 col-sm-8'>";
                             echo "$familia[cont_nombre]";
-                            echo "</div>";
+                            echo "</div></a>";
                             echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
                             echo "</div></a>";
@@ -262,11 +264,11 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     }
 ?>
                 </div>
-
-            </div>
 <?php
     }
 ?>
+            </div>
+
             
 
             <div class="ejemplo-geo">
