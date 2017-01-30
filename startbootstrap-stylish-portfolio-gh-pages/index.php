@@ -22,6 +22,8 @@ if (isset($SESSION['usu_id'])){
 
     <title>My Contacts</title>
 
+    <link rel="icon" type="image/png" href="/img/header.png" />
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 

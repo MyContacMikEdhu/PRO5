@@ -1,36 +1,34 @@
-<?php
-include 'conexion.php';
-extract($_REQUEST);
-session_start();
-
-if(!isset($_SESSION['usu_id'])){
-	header('location:../index.php');
-}
-
-$usu_id = $_SESSION['usu_id'];
-$sql_usuarios="SELECT * FROM tbl_usuario WHERE usu_id=$usu_id";
-
-$usuarios = mysqli_query($conexion, $sql_usuarios);
-
-while ($usuario=mysqli_fetch_array($usuarios)) {
-	echo "Hola $usuario[usu_nombre] $usuario[usu_apellidos]";
-	$direccion = $usuario['usu_dir_casa'];
-}
-?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Contacts</title>
+    <title>Geocoding service</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 60%;
-        margin-left: 30%;
+        height: 100%;
       }
-    
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
     </style>
   </head>
   <body>
@@ -47,7 +45,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
       }
 
       function geocodeAddress(geocoder, resultsMap) {
-        var address = '<?php echo$direccion;?>';
+        var address = "Provenza 12, Hospitalet";
         geocoder.geocode({'address': address}, function(results, status) {
           if (status === 'OK') {
             resultsMap.setCenter(results[0].geometry.location);
@@ -55,7 +53,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                 '<div id="siteNotice">'+
                 '</div>'+
                 '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-                '<img src="../img/header.png"/>'+
+                '<img src="img/icono.jpg"/>'+
                 '<div id="bodyContent">'+
                 '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
                 'sandstone rock formation in the southern part of the '+
@@ -98,6 +96,5 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYYKT7N9EkuWSPDh3btcuwF2iGeg3w7co&callback=initMap">
     </script>
-	<a href="logout.proc.php">Pulsame</a>
-</body>
+  </body>
 </html>
