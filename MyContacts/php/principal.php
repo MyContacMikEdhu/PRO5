@@ -28,6 +28,11 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     <meta charset="utf-8">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
     <!-- Custom CSS -->
     <link href="../css/stylish-portfolio.css" rel="stylesheet">
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -290,7 +295,15 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                          <a href="#ejemplo" class="btn btn-dark" style="height: 32px;"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>&nbsp;Agregar contacto</a>
                     </div>
                     <div class="col-sm-2" style="padding-top: 2%;">
-                         <a href="#ejemplo" class="btn btn-dark"  style="height: 32px;"><i class="fa fa-cog fa-lg" aria-hidden="true"></i>&nbsp;Configuración</a>
+                         
+                         <div class="dropdown">
+  <button class="btn btn-dark dropdown-toggle" type="button" style="height: 32px;" data-toggle="dropdown"><i class="fa fa-cog fa-lg" aria-hidden="true"></i>&nbsp;Configuración
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Editar Cuenta</a></li>
+    <li><a href="#">Darse de baja</a></li>
+  </ul>
+</div>
                     </div>
                     <div class="col-sm-2" style="padding-top: 2%;">
                          <a href="logout.proc.php" class="btn btn-exit"  style="height: 32px;"><i class="fa fa-power-off fa-lg" aria-hidden="true"></i>&nbsp;Cerrar sesión</a>
