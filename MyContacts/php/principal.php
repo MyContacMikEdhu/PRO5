@@ -91,6 +91,48 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     }
                 }
 
+var READY_STATE_COMPLETE=4;
+var peticion_http = null;
+ 
+function inicializa_xhr() {
+  if(window.XMLHttpRequest) {
+    return new XMLHttpRequest(); 
+  }
+  else if(window.ActiveXObject) {
+    return new ActiveXObject("Microsoft.XMLHTTP");
+  } 
+}
+ 
+function crea_query_string() {
+  var busca = document.getElementById("buscador"); 
+  return "palabra=" + encodeURIComponent(busca.value) +
+    
+}
+ 
+function buscar() {
+  peticion_http = inicializa_xhr();
+  if(peticion_http) {
+    peticion_http.onreadystatechange = procesaRespuesta;
+    peticion_http.open("POST", "buscar.php", true);
+ 
+    peticion_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    var query_string = crea_query_string();
+    peticion_http.send(query_string);
+  }
+}
+ 
+function procesaRespuesta() {
+  if(peticion_http.readyState == READY_STATE_COMPLETE) {
+    if(peticion_http.status == 200) {
+      document.getElementById("respuesta").innerHTML = peticion_http.responseText;
+    }
+  }
+}
+ 
+function buscador(){
+    document.getElementById("buscador").onkeypress = buscar;
+};
+
 
     </script>
     <script async defer
@@ -151,7 +193,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                    <div class="col-sm-offset-1 col-sm-11">
                         <form>
                         &nbsp;&nbsp;&nbsp;
-                           <input type="text" name="buscar" placeholder="Buscar" style="width:60%;height: 32px;">
+                           <input type="text" id="buscador" name="buscar" placeholder="Buscar" style="width:60%;height: 32px;">
                            <button class="btn btn-dark" name="entrar" style="height: 32px;"><i class="fa fa-search" aria-hidden="true"></i></button>
                        </form>
                    </div>
@@ -183,7 +225,8 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     </div>
 <?php
                 $tipo = "Familia";
-                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo'";
+                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo'".;
+                echo "<span id='respuesta'></span>" ."";
                 $familias = mysqli_query($conexion, $sql_familia);
                 if (mysqli_num_rows($familias)>0){
                     while ($familia = mysqli_fetch_array($familias)) {
