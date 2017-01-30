@@ -11,5 +11,124 @@
   }
 
 .login {
-	margin-top: 2%
+	text-align: right;
+	margin-top: 3%;
+	margin-right: 5%;
+}
+
+/*@media (max-width: 850px) {
+  .login {
+    margin-left: 25%;
+  }
+}
+@media (max-width: 1280px) {
+  .login {
+    margin-left: 65%;
+  }
+}
+@media (max-width: 1370px) {
+  .login {
+    margin-left: 50%;
+  }
+}
+@media (max-width: 640px) {
+  .login {
+    margin-left: 1%;
+  }
+}*/
+
+.login input {
+	height: 32px;
+	padding-left: 5px;
+}
+
+.ejemplo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+}
+
+.ejemplo-panel {
+	position: relative;
+    width: 25%;
+    height: 100%;
+    float: left;
+    border-right: 3px solid black;
+}
+
+.ejemplo-panel-datos {
+	position: relative;
+    width: 100%;
+    height: 20%;
+    border-bottom:  3px solid black;
+}
+
+.ejemplo-panel-opcion {
+	position: relative;
+    width: 100%;
+    height: 10%;
+}
+.ejemplo-panel-opcion2 {
+  position: relative;
+    width: 100%;
+    height: 5%;
+    padding-top: 2%;
+    border-bottom:  3px solid black;
+}
+.ejemplo-panel-contactos {
+	position: relative;
+    width: 100%;
+    height: 65%;
+}
+
+
+.ejemplo-panel-contactos-grupo {
+  position: relative;
+  width: 100%;
+  height: 6%;
+  padding-left: 10%;
+  border-bottom: 1px solid black;
+  padding-top: 2%;
+  background-color: #bfbfbf;
+}
+
+.ejemplo-panel-contactos-contacto {
+  position: relative;
+  width: 100%;
+  height: 10%;
+  padding-top: 5%;
+  border-bottom: 1px solid black;
+}
+
+.ejemplo-geo {
+	position: relative;
+    width: 75%;
+    height: 100%;
+    float: left;
+}
+
+.ejemplo-geo-opciones{
+	position: relative;
+    width: 100%;
+    height: 10%;
+    border-bottom: 3px solid black;
+}
+
+.ejemplo-geo-mapa{
+	position: relative;
+    width: 100%;
+    height: 90%;
+}
+
+
+.circulo {
+  height: 100px;
+  width: 100px;
+  display: table-cell;
+  text-align: center;
+  font-size:36px;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: 3px solid black;
 }

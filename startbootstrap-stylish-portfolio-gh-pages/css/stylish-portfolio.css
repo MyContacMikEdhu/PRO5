@@ -13,48 +13,63 @@ body {
 }
 
 body {
-    font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Calibri";
+    font-size: 13px;
+    color: black;
+    /*font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;*/
 }
 
 .text-vertical-center {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
+    padding-left: 50%;
+    padding-top: 20%;
 }
 
 .text-vertical-center h1 {
+    color: black;
     margin: 0;
     padding: 0;
     font-size: 4.5em;
     font-weight: 700;
 }
+.text-vertical-center h3 {
+    color: black;
+    margin: 0;
+    padding: 0;
+    font-size: 4.0em;
+    font-weight: 350;
+}
 
 /* Custom Button Styles */
 
 .btn-dark {
-    border-radius: 0;
+    border-radius: 10;
     color: #fff;
-    background-color: rgba(0,0,0,0.4);
+    background-color: black;
 }
 
 .btn-dark:hover,
 .btn-dark:focus,
 .btn-dark:active {
     color: #fff;
-    background-color: rgba(0,0,0,0.7);
+    background-color: #E81E25;
+    border: 1px solid black;
 }
 
-.btn-light {
-    border-radius: 0;
-    color: #333;
-    background-color: rgb(255,255,255);
+.btn-exit {
+    border-radius: 10;
+    color: white;
+    background-color: #E81E25;
 }
 
-.btn-light:hover,
-.btn-light:focus,
-.btn-light:active {
-    color: #333;
-    background-color: rgba(255,255,255,0.8);
+.btn-exit:hover,
+.btn-exit:focus,
+.btn-exit:active {
+    color: black;
+    background-color: white;
+    border: 1px solid black;
 }
 
 /* Custom Horizontal Rule */
@@ -156,7 +171,7 @@ nav {
     position: relative;
     width: 100%;
     height: 100%;
-    background: url(../img/bg.jpg) no-repeat center center scroll;
+    background: url(../img/bg1.jpg) no-repeat center center scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
