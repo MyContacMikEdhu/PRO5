@@ -36,6 +36,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/ajax.js"></script>
 
 
     <!-- Custom CSS -->
@@ -90,6 +91,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                   });
                 }
 
+
                 function confirmar(){
                    var confirmar = confirm("Estas seguro de que quieres eliminar este contacto?");
                     if (!confirmar){
@@ -103,6 +105,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                         return false;
                     }
                 }
+
 
                 function validar_nc(){
                     var formulario = document.getElementById("new_contact");
@@ -125,7 +128,8 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                         }
                 }
 
-       /* var READY_STATE_COMPLETE=4;
+        /*var READY_STATE_COMPLETE=4;
+
         var peticion_http = null;
          
         function inicializa_xhr() {
@@ -139,7 +143,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
          
         function crea_query_string() {
           var busca = document.getElementById("buscador"); 
-          return "palabra=" + encodeURIComponent(busca.value) +
+          return "palabra=" + encodeURIComponent(busca.value);
             
         }
          
@@ -158,13 +162,15 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
         function procesaRespuesta() {
           if(peticion_http.readyState == READY_STATE_COMPLETE) {
             if(peticion_http.status == 200) {
-              document.getElementById("respuesta").innerHTML = peticion_http.responseText;
+              document.getElementById("contenido-contactos").innerHTML = peticion_http.responseText;
             }
           }
         }
          
         function buscador(){
-            document.getElementById("buscador").onkeypress = buscar;
+
+            document.getElementById("buscador").onclick = buscar();
+
         };*/
 
 
@@ -224,9 +230,9 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                 <div class="ejemplo-panel-opcion">
                 <br>
                    <div class="col-sm-offset-1 col-sm-11">
-                        <form>
+                        <form id="search_form">
                         &nbsp;&nbsp;&nbsp;
-                           <input type="text" id="buscador" name="buscar" placeholder="Buscar" style="width:60%;height: 32px;">
+                           <input type="text" name="buscar" placeholder="Buscar" id="search" style="width:60%;height: 32px;">
                            <button class="btn btn-dark" name="entrar" style="height: 32px;"><i class="fa fa-search" aria-hidden="true"></i></button>
                        </form>
                    </div>
@@ -242,7 +248,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                         </form>
                     </div>   
                 </div>
-                <div class="ejemplo-panel-contactos" style="overflow-y: scroll;">
+                <div class="ejemplo-panel-contactos"  id="resultado" style="overflow-y: scroll;">
                 <?php
                 if (mysqli_num_rows($contactos)==0){
                     echo "<br>";
@@ -258,7 +264,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     </div>
 <?php
                 $tipo = "Familia";
-                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo'";
+                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo' AND usu_id='$usu_id'";
                 $familias = mysqli_query($conexion, $sql_familia);
                 if (mysqli_num_rows($familias)>0){
                     while ($familia = mysqli_fetch_array($familias)) {
@@ -284,7 +290,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     </div>
                     <?php
                 $tipo = "Amigos";
-                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo'";
+                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo' AND usu_id='$usu_id'";
                 $familias = mysqli_query($conexion, $sql_familia);
                 if (mysqli_num_rows($familias)>0){
                     while ($familia = mysqli_fetch_array($familias)) {
@@ -309,7 +315,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     </div>
                     <?php
                 $tipo = "Trabajo";
-                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo'";
+                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo' AND usu_id='$usu_id'";
                 $familias = mysqli_query($conexion, $sql_familia);
                 if (mysqli_num_rows($familias)>0){
                     while ($familia = mysqli_fetch_array($familias)) {
@@ -334,7 +340,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     </div>
                     <?php
                 $tipo = "Otro";
-                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo'";
+                $sql_familia = "SELECT * FROM tbl_contactos WHERE cont_tipo = '$tipo' AND usu_id='$usu_id'";
                 $familias = mysqli_query($conexion, $sql_familia);
                 if (mysqli_num_rows($familias)>0){
                     while ($familia = mysqli_fetch_array($familias)) {
@@ -457,7 +463,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
   <span class="caret"></span></button>
   <ul class="dropdown-menu">
     <li><a href="#">Editar Cuenta</a></li>
-    <?php echo "<li><a href='baja.proc.php?id=$usu_id' onclick='darDeBaja();'>Darse de baja</a></li>";?>
+    <?php echo "<li><a href='baja.proc.php?id=$usu_id' onclick='return darDeBaja();' >Darse de baja</a></li>";?>
   </ul>
 </div>
                     </div>
@@ -472,6 +478,5 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
             </div>
 
     </section>
-
 </body>
 </html>
