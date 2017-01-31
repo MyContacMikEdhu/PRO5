@@ -23,6 +23,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     $email = $usuario['usu_correo'];
     $movil = $usuario['usu_movil'];
 	$direccion = $usuario['usu_dir_casa'];
+    $direccion_trabajo = $usuario['usu_dir_otro'];
 }
 ?>
 <!DOCTYPE html>
@@ -45,8 +46,60 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <script type="text/javascript">
+        /*var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 16,
+          center: new google.maps.LatLng(-33.91722, 151.23064),
+          mapTypeId: 'roadmap'
+        });
 
-         function initMap() {
+        var icons = {
+          casa: {
+            icon: "../img/icon-casa.png"
+          },
+          trabajo: {
+            icon: "../img/icon-trabajo.png",
+          },
+          
+        };
+
+        function addMarker(feature) {
+            tipo = feature.type;
+            if (tipo=="casa"){
+                var animacion = google.maps.Animation.BOUNCE;
+            } else {
+                var animacion = google.maps.Animation.DROP;
+            }
+          var marker = new google.maps.Marker({
+            position: feature.local(),
+            icon: icons[feature.type].icon,
+            animation: animacion,
+            map: map
+          });
+        }
+
+        var features = [
+          {
+            type: 'casa',
+            local: new google.maps.Geocoder().geocode({
+                address: "<?php //echo$direccion; ?>"
+                }, function(results, status) {
+                      return results[0].geometry.location;
+                    }
+                )
+            }, {
+            address: "<?php //echo$direccion_trabajo; ?>",
+            type: 'trabajo'
+          }
+        ];
+
+        for (var i = 0, feature; feature = features[i]; i++) {
+          addMarker(feature);
+        }
+      }*/
+
+     function initMap() {
                   
 
                  var map = new google.maps.Map(document.getElementById('map'), {
@@ -59,12 +112,11 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                 }
 
                 function geocodeAddress(geocoder, resultsMap) {
-                  var address = "<?php echo$direccion; ?>";
+                  var address = ["<?php echo$direccion; ?>", "<?php echo$direccion_trabajo; ?>"];
+                  //var address1 = "<?php echo$direccion_trabajo; ?>";
                   geocoder.geocode({'address': address}, function(results, status) {
                     if (status === google.maps.GeocoderStatus.OK) {
                       resultsMap.setCenter(results[0].geometry.location);
-
-
 
                   var contentString = '<div><p>Mi Casa</p></div>';
 
@@ -78,6 +130,13 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                         animation: google.maps.Animation.BOUNCE,
                         position: results[0].geometry.location,
                         icon: "../img/icon-casa.png",
+                      });
+
+                      var marker1 = new google.maps.Marker({
+                        map: resultsMap,
+                        animation: google.maps.Animation.DROP,
+                        position: results[1].geometry.location,
+                        icon: "../img/icon-trabajo.png",
                       });
 
 
