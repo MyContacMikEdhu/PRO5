@@ -239,11 +239,12 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                 </div>
                 <div class="ejemplo-panel-opcion2">
                     <div class="col-sm-12">
-                        <form>
-                            &nbsp;&nbsp;&nbsp;<input type="checkbox" name="grupo" value="familia">Familia&nbsp;&nbsp;
-                            <input type="checkbox" name="grupo" value="amigos">Amigos&nbsp;&nbsp;
-                            <input type="checkbox" name="grupo" value="trabajo">Trabajo&nbsp;&nbsp;
-                            <input type="checkbox" name="grupo" value="otro">Otro
+                        <form id="check_form">
+                            &nbsp;&nbsp;&nbsp;
+                            <input type="checkbox" id="check" name="grupo" value="familia">Familia&nbsp;&nbsp;
+                            <input type="checkbox" id="check" name="grupo" value="amigos">Amigos&nbsp;&nbsp;
+                            <input type="checkbox" id="check" name="grupo" value="trabajo">Trabajo&nbsp;&nbsp;
+                            <input type="checkbox" id="check" name="grupo" value="otro">Otro
 
                         </form>
                     </div>   

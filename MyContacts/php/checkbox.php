@@ -1,7 +1,31 @@
-<?php
-$search ='';
+<?php  
+$familia="";
+$amigos="";
+$trabajo="";
+$otro="";
+$search="";
+
+if (isset($_POST['familia'])){
+	$familia = $_POST['familia'];
+}
+if (isset($_POST['amigos'])){
+	$amigos = $_POST['amigos'];
+}
+if (isset($_POST['trabajo'])){
+	$trabajo = $_POST['trabajo'];
+}
+if (isset($_POST['otro'])){
+	$otro = $_POST['otro'];
+}
 if (isset($_POST['search'])){
 	$search = $_POST['search'];
+}
+
+if ($familia=="" && $amigos=="" && $trabajo=="" && $otro==""){
+	$familia="familia";
+	$amigos="amigos";
+	$trabajo="trabajo";
+	$otro="otro";
 }
 
 include 'conexion.php';
@@ -19,7 +43,9 @@ $contactos = mysqli_query($conexion, $sql_contactos);
 
                     echo "</div>";
                 } else {
-                    
+
+
+				if ($familia!=""){                    
                 ?>
 
                     <div class="ejemplo-panel-contactos-grupo">
@@ -46,6 +72,9 @@ $contactos = mysqli_query($conexion, $sql_contactos);
 
                         }
                     }
+                }
+
+                if ($amigos!=""){  
 ?>
 
                     <div class="ejemplo-panel-contactos-grupo">
@@ -72,6 +101,9 @@ $contactos = mysqli_query($conexion, $sql_contactos);
 
                         }
                     }
+                }
+
+                if ($trabajo!=""){  
 ?>
                     <div class="ejemplo-panel-contactos-grupo">
                         <i class="fa fa-briefcase " aria-hidden="true"></i>&nbsp;Trabajo
@@ -97,6 +129,9 @@ $contactos = mysqli_query($conexion, $sql_contactos);
 
                         }
                     }
+                  }
+
+                  if ($otro!=""){  
 ?>
                     <div class="ejemplo-panel-contactos-grupo">
                         <i class="fa fa-users " aria-hidden="true"></i>&nbsp;Otro
@@ -122,6 +157,7 @@ $contactos = mysqli_query($conexion, $sql_contactos);
 
                         }
                     }
+                }
 ?>
                 </div>
 <?php
