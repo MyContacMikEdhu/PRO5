@@ -127,53 +127,6 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                             return false;
                         }
                 }
-
-        /*var READY_STATE_COMPLETE=4;
-
-        var peticion_http = null;
-         
-        function inicializa_xhr() {
-          if(window.XMLHttpRequest) {
-            return new XMLHttpRequest(); 
-          }
-          else if(window.ActiveXObject) {
-            return new ActiveXObject("Microsoft.XMLHTTP");
-          } 
-        }
-         
-        function crea_query_string() {
-          var busca = document.getElementById("buscador"); 
-          return "palabra=" + encodeURIComponent(busca.value);
-            
-        }
-         
-        function buscar() {
-          peticion_http = inicializa_xhr();
-          if(peticion_http) {
-            peticion_http.onreadystatechange = procesaRespuesta;
-            peticion_http.open("POST", "buscar.php", true);
-         
-            peticion_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            var query_string = crea_query_string();
-            peticion_http.send(query_string);
-          }
-        }
-         
-        function procesaRespuesta() {
-          if(peticion_http.readyState == READY_STATE_COMPLETE) {
-            if(peticion_http.status == 200) {
-              document.getElementById("contenido-contactos").innerHTML = peticion_http.responseText;
-            }
-          }
-        }
-         
-        function buscador(){
-
-            document.getElementById("buscador").onclick = buscar();
-
-        };*/
-
-
     </script>
     <script async defer
                       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSz41JPaWeB_ZMOLjiyhXQOwlLr4LYnOA&callback=initMap">
