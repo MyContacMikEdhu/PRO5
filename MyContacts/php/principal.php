@@ -463,11 +463,89 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
   <button class="btn btn-dark dropdown-toggle" type="button" style="height: 32px;" data-toggle="dropdown"><i class="fa fa-cog fa-lg" aria-hidden="true"></i>&nbsp;Configuración
   <span class="caret"></span></button>
   <ul class="dropdown-menu">
-    <li><a href="#">Editar Cuenta</a></li>
+    <li><a href="#" data-toggle="modal" data-target="#myModal2">Editar Cuenta</a></li>
     <?php echo "<li><a href='baja.proc.php?id=$usu_id' onclick='return darDeBaja();' >Darse de baja</a></li>";?>
   </ul>
 </div>
                     </div>
+
+                    <div class="modal fade" id="myModal2" role="dialog" style="font-size: 15px">
+                            <div class="modal-dialog">
+                            
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title">Editar cuenta</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <form id="new_user" action="php/newuser.proc.php" method="POST" onsubmit="return validar_nu();">
+                                  
+                                  <div class="row">
+                                     
+                                      <div class="col-sm-6">
+                                          <i class="fa fa-at fa-lg" aria-hidden="true"></i>&nbsp;<input type="email" name="usu_correo" placeholder="Email" style="width: 89%">*
+                                      </div> 
+                                      <div class="col-sm-6">
+                                          <i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;<input type="password" name="usu_pass" placeholder="Contraseña" style="width: 85%">*
+                                      </div>
+                                  </div>
+                                  <br>
+                                  <div class="row">
+                                     
+                                      <div class="col-sm-6">
+                                          <i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;<input type="text" name="usu_nombre" placeholder="Nombre" style="width: 90%">*
+                                      </div> 
+                                      <div class="col-sm-6">
+                                          <input type="text" name="usu_apellidos" placeholder="Apellidos" style="width: 95%" maxlength="35">*
+                                      </div>
+                                  </div>
+                                  <br>
+                                  <div class="row">
+                                      <div class="col-sm-12">
+                                      <i class="fa fa-home fa-lg" aria-hidden="true"></i>
+                                        <input type="text" name="calle_casa" placeholder="Dirección casa" style="width: 30%">
+                                        <input type="number" name="num_casa" placeholder="Núm." style="width: 10%">
+                                        <input type="text" name="local_casa" placeholder="Localidad" style="width: 30%">
+                                        <input type="text" name="ciudad_casa" placeholder="Ciudad" style="width: 20%">*
+                                      </div>
+                                  </div>
+                                  <br>
+                                  <div class="row">
+                                      <div class="col-sm-12">
+                                      <i class="fa fa-building-o fa-lg" aria-hidden="true"></i>&nbsp;
+                                        <input type="text" name="calle_otro" placeholder="Otra dirección" style="width: 30%">
+                                        <input type="number" name="num_otro" placeholder="Núm." style="width: 10%">
+                                        <input type="text" name="local_otro" placeholder="Localidad" style="width: 30%">
+                                        <input type="text" name="ciudad_otro" placeholder="Ciudad" style="width: 20%">
+                                      </div>
+                                  </div>
+                                      <br>
+                                  <div class="row">
+                                    <div class="col-sm-5">
+                                        <i class="fa fa-phone fa-lg" aria-hidden="true"></i>&nbsp;<input type="tel" name="usu_tlf" placeholder="Teléfono" maxlength="9" size="9">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-mobile fa-lg" aria-hidden="true"></i>&nbsp;<input type="tel" name="usu_movil" placeholder="Móvil" maxlength="9" size="9">
+                                    </div>
+                                    
+                                    
+                                  </div>    
+                                  <br>    
+                                  <div class="row">
+                                      <div class="col-sm-offset-5 col-sm-2">
+                                          <button class="btn btn-dark" name="add_user" style="height: 32px;">Registrarse</button>
+                                      </div>
+                                  </div>   
+                                      
+                                      
+                                      
+                                  </form>
+                                </div>
+                                
+                              </div>
+                              
+                            </div>
+                          </div>
                     <div class="col-sm-2" style="padding-top: 2%;">
                          <a href="logout.proc.php" class="btn btn-exit"  style="height: 32px;"><i class="fa fa-power-off fa-lg" aria-hidden="true"></i>&nbsp;Cerrar sesión</a>
                     </div>
