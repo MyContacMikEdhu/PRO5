@@ -35,7 +35,7 @@ $usu_id = $_SESSION['usu_id'];
 $sql_contactos = "SELECT * FROM tbl_contactos WHERE usu_id = $usu_id";
 $contactos = mysqli_query($conexion, $sql_contactos);
 ?>
-    <div class="ejemplo-panel-contactos" id="contenido-contactos" style="overflow-y: scroll;">
+    <div class="ejemplo-panel-contactos" id="resultado">
                 <?php
                 if (mysqli_num_rows($contactos)==0){
                     echo "<br>";
