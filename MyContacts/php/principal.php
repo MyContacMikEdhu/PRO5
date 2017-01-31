@@ -17,9 +17,11 @@ $contactos = mysqli_query($conexion, $sql_contactos);
 
 while ($usuario=mysqli_fetch_array($usuarios)) {
 	
+
     $nombre = $usuario['usu_nombre'];
     $apellido = $usuario['usu_apellidos'];
     $email = $usuario['usu_correo'];
+    $movil = $usuario['usu_movil'];
 	$direccion = $usuario['usu_dir_casa'];
 }
 ?>
@@ -89,11 +91,81 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                 }
 
                 function confirmar(){
-                   var confirmar = confirm("Estas seguro de que quieres eliminar este contacto");
+                   var confirmar = confirm("Estas seguro de que quieres eliminar este contacto?");
                     if (!confirmar){
                         return false;
                     }
                 }
+
+                function darDeBaja(){
+                    var confirmar = confirm("Estas seguro de que quieres darte de baja?");
+                    if (!confirmar){
+                        return false;
+                    }
+                }
+
+                function validar_nc(){
+                    var formulario = document.getElementById("new_contact");
+                        var msg="Error:";
+
+                        if (formulario.cont_nombre.value==""){
+                            msg += "\n El nombre es obligatorio";
+                            //document.getElementById("form1").usu_correo.style.borderColor = "red";
+                        }
+
+                        if (formulario.calle_casa.value=="" || formulario.num_casa.value=="" || formulario.local_casa.value=="" || formulario.ciudad_casa.value=="" ){
+                            msg += "\n La dirección de casa es obligatoria";
+                            //document.getElementById("form1").usu_pass.style.borderColor = "red";
+                        }
+                    if (msg == "Error:"){
+                        return true;
+                        } else{
+                            alert(msg);
+                            return false;
+                        }
+                }
+
+       /* var READY_STATE_COMPLETE=4;
+        var peticion_http = null;
+         
+        function inicializa_xhr() {
+          if(window.XMLHttpRequest) {
+            return new XMLHttpRequest(); 
+          }
+          else if(window.ActiveXObject) {
+            return new ActiveXObject("Microsoft.XMLHTTP");
+          } 
+        }
+         
+        function crea_query_string() {
+          var busca = document.getElementById("buscador"); 
+          return "palabra=" + encodeURIComponent(busca.value) +
+            
+        }
+         
+        function buscar() {
+          peticion_http = inicializa_xhr();
+          if(peticion_http) {
+            peticion_http.onreadystatechange = procesaRespuesta;
+            peticion_http.open("POST", "buscar.php", true);
+         
+            peticion_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            var query_string = crea_query_string();
+            peticion_http.send(query_string);
+          }
+        }
+         
+        function procesaRespuesta() {
+          if(peticion_http.readyState == READY_STATE_COMPLETE) {
+            if(peticion_http.status == 200) {
+              document.getElementById("respuesta").innerHTML = peticion_http.responseText;
+            }
+          }
+        }
+         
+        function buscador(){
+            document.getElementById("buscador").onkeypress = buscar;
+        };*/
 
 
     </script>
@@ -137,10 +209,10 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     <div style="width: 100%; height: 25%">
                         <div class="row">
                             <div class="col-sm-offset-1 col-sm-1 ">
-                                <i class="fa fa-phone fa-lg" aria-hidden="true"></i>
+                                <i class="fa fa-mobile fa-lg" aria-hidden="true"></i>
                             </div>
                             <div class="col-sm-8">
-                                987 654 321
+                                <?php echo $movil; ?>
                             </div>
                         </div>
                     </div>    
@@ -154,7 +226,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                    <div class="col-sm-offset-1 col-sm-11">
                         <form>
                         &nbsp;&nbsp;&nbsp;
-                           <input type="text" name="buscar" placeholder="Buscar" style="width:60%;height: 32px;">
+                           <input type="text" id="buscador" name="buscar" placeholder="Buscar" style="width:60%;height: 32px;">
                            <button class="btn btn-dark" name="entrar" style="height: 32px;"><i class="fa fa-search" aria-hidden="true"></i></button>
                        </form>
                    </div>
@@ -295,7 +367,88 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                         <img src="../img/header1.png" width="30%">
                     </div>
                     <div class="col-sm-2" style="padding-top: 2%;">
-                         <a href="#ejemplo" class="btn btn-dark" style="height: 32px;"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>&nbsp;Agregar contacto</a>
+                         <a href="#ejemplo" class="btn btn-dark" style="height: 32px;" data-toggle="modal" data-target="#myModal"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>&nbsp;Agregar contacto</a>
+
+
+                         <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+                            
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title">Agregar Contacto</h4>
+                                </div>
+                                <div class="modal-body">
+                                <p>Los campos (*) son obligatorios...</p><br>
+                                  <form id="new_contact" action="newcontact.proc.php" method="POST" onsubmit="return validar_nc();">
+                                  <div class="row">
+                                     <div class="col-sm-5">
+                                          <i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;<input type="text" name="cont_nombre" placeholder="Nombre" style="width: 85%">*
+                                      </div>
+                                      <div class="col-sm-7">
+                                          <i class="fa fa-at fa-lg" aria-hidden="true"></i>&nbsp;<input type="email" name="cont_correo" placeholder="Email" style="width: 90%">
+                                      </div> 
+                                  </div>
+                                  <br>
+                                  <div class="row">
+                                      <div class="col-sm-12">
+                                      <i class="fa fa-home fa-lg" aria-hidden="true"></i>
+                                        <input type="text" name="calle_casa" placeholder="Dirección casa" style="width: 30%">
+                                        <input type="number" name="num_casa" placeholder="Núm." style="width: 10%">
+                                        <input type="text" name="local_casa" placeholder="Localidad" style="width: 30%">
+                                        <input type="text" name="ciudad_casa" placeholder="Ciudad" style="width: 20%">*
+                                      </div>
+                                  </div>
+                                  <br>
+                                  <div class="row">
+                                      <div class="col-sm-12">
+                                      <i class="fa fa-building-o fa-lg" aria-hidden="true"></i>&nbsp;
+                                        <input type="text" name="calle_otro" placeholder="Otra dirección" style="width: 30%">
+                                        <input type="number" name="num_otro" placeholder="Núm." style="width: 10%">
+                                        <input type="text" name="local_otro" placeholder="Localidad" style="width: 30%">
+                                        <input type="text" name="ciudad_otro" placeholder="Ciudad" style="width: 20%">
+                                      </div>
+                                  </div>
+                                      <br>
+                                  <div class="row">
+                                    <div class="col-sm-5">
+                                        <i class="fa fa-phone fa-lg" aria-hidden="true"></i>&nbsp;<input type="tel" name="telf" placeholder="Teléfono" maxlength="9" size="9">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-mobile fa-lg" aria-hidden="true"></i>&nbsp;<input type="tel" name="movil" placeholder="Móvil" maxlength="9" size="9">
+                                    </div>
+                                    <div class="col-sm-7">
+                                    <i class="fa fa-users " aria-hidden="true"></i>&nbsp;
+                                        <select name="tipo" style="height: 25px;">
+                                          <option>Familia</option>
+                                          <option>Amigos</option>
+                                          <option>Trabajo</option>
+                                          <option>Otro</option>
+                                      </select>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-birthday-cake" aria-hidden="true" ></i>&nbsp;<input type="date" name="bday" placeholder="Cumpleaños" >
+                                    </div>
+                                    
+                                  </div>    
+                                  <br>    
+                                  <div class="row">
+                                      <div class="col-sm-offset-5 col-sm-2">
+                                          <button class="btn btn-dark" name="add_contact" style="height: 32px;">Añadir</button>
+                                      </div>
+                                  </div>   
+                                      
+                                      
+                                      
+                                  </form>
+                                </div>
+                                
+                              </div>
+                              
+                            </div>
+                          </div>
+
+
+
                     </div>
                     <div class="col-sm-2" style="padding-top: 2%;">
                          
@@ -304,7 +457,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
   <span class="caret"></span></button>
   <ul class="dropdown-menu">
     <li><a href="#">Editar Cuenta</a></li>
-    <li><a href="#">Darse de baja</a></li>
+    <?php echo "<li><a href='baja.proc.php?id=$usu_id' onclick='darDeBaja();'>Darse de baja</a></li>";?>
   </ul>
 </div>
                     </div>

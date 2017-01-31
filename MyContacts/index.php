@@ -3,7 +3,7 @@
 
     session_start();
 
-if (isset($SESSION['usu_id'])){
+if (isset($_SESSION['usu_id'])){
     header("location:php/principal.php");
 } else {
 
@@ -92,6 +92,10 @@ if (isset($SESSION['usu_id'])){
             document.getElementById("form1").usu_pass.style.borderColor = "red";
         }
 
+        function reg_ok(){
+            alert("Registrado satisfactoriamente");
+        }
+
         function validar(){
             var formulario = document.getElementById("form1");
             var msg="Error:";
@@ -112,6 +116,39 @@ if (isset($SESSION['usu_id'])){
                 return false;
             }
         }
+
+        function validar_nu(){
+            var formulario = document.getElementById("new_user");
+            var msg="Error:";
+
+            if (formulario.usu_correo.value==""){
+                msg += "\n El correo es obligatorio";
+            }
+
+            if (formulario.usu_pass.value==""){
+                msg += "\n La contraseña es obligatoria";
+            }
+
+            if (formulario.usu_nombre.value==""){
+                msg += "\n El nombre es obligatorio";
+            }
+
+            if (formulario.usu_apellidos.value==""){
+                msg += "\n Los apellidos son obligatorios";
+            }
+
+             if (formulario.calle_casa.value=="" || formulario.num_casa.value=="" || formulario.local_casa.value=="" || formulario.ciudad_casa.value=="" ){
+                            msg += "\n La dirección de casa es obligatoria";
+                            //document.getElementById("form1").usu_pass.style.borderColor = "red";
+                        }
+
+        if (msg == "Error:"){
+            return true;
+            } else{
+                alert(msg);
+                return false;
+            }
+        }
                     </script>
                     <script async defer
                       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSz41JPaWeB_ZMOLjiyhXQOwlLr4LYnOA&callback=initMap">
@@ -123,6 +160,8 @@ if (isset($SESSION['usu_id'])){
 $body = "<body";
 if (isset($error)){
     $body .= " onload='Error();'>";
+} else if ($error_reg == "no"){
+    $body .= " onload='reg_ok();'>";
 } else {
     $body .= ">";
 }
@@ -152,8 +191,87 @@ echo "$body";
         <div class="text-vertical-center">
             <h3>Almacena tus contactos y míralos en el mapa.</h3>
             <br>
-            <a href="#about" class="btn btn-dark btn-lg">Registrarse</a>
+            <a href="#about" class="btn btn-dark btn-lg" data-toggle="modal" data-target="#myModal">Registrarse</a>
+
         </div>
+        <div class="modal fade" id="myModal" role="dialog" style="font-size: 15px">
+                            <div class="modal-dialog">
+                            
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title">Registrarse</h4>
+                                </div>
+                                <div class="modal-body">
+                                <p>Los campos (*) son obligatorios...</p><br>
+                                  <form id="new_user" action="php/newuser.proc.php" method="POST" onsubmit="return validar_nu();">
+                                  
+                                  <div class="row">
+                                     
+                                      <div class="col-sm-6">
+                                          <i class="fa fa-at fa-lg" aria-hidden="true"></i>&nbsp;<input type="email" name="usu_correo" placeholder="Email" style="width: 89%">*
+                                      </div> 
+                                      <div class="col-sm-6">
+                                          <i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;<input type="password" name="usu_pass" placeholder="Contraseña" style="width: 85%">*
+                                      </div>
+                                  </div>
+                                  <br>
+                                  <div class="row">
+                                     
+                                      <div class="col-sm-6">
+                                          <i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;<input type="text" name="usu_nombre" placeholder="Nombre" style="width: 90%">*
+                                      </div> 
+                                      <div class="col-sm-6">
+                                          <input type="text" name="usu_apellidos" placeholder="Apellidos" style="width: 95%" maxlength="35">*
+                                      </div>
+                                  </div>
+                                  <br>
+                                  <div class="row">
+                                      <div class="col-sm-12">
+                                      <i class="fa fa-home fa-lg" aria-hidden="true"></i>
+                                        <input type="text" name="calle_casa" placeholder="Dirección casa" style="width: 30%">
+                                        <input type="number" name="num_casa" placeholder="Núm." style="width: 10%">
+                                        <input type="text" name="local_casa" placeholder="Localidad" style="width: 30%">
+                                        <input type="text" name="ciudad_casa" placeholder="Ciudad" style="width: 20%">*
+                                      </div>
+                                  </div>
+                                  <br>
+                                  <div class="row">
+                                      <div class="col-sm-12">
+                                      <i class="fa fa-building-o fa-lg" aria-hidden="true"></i>&nbsp;
+                                        <input type="text" name="calle_otro" placeholder="Otra dirección" style="width: 30%">
+                                        <input type="number" name="num_otro" placeholder="Núm." style="width: 10%">
+                                        <input type="text" name="local_otro" placeholder="Localidad" style="width: 30%">
+                                        <input type="text" name="ciudad_otro" placeholder="Ciudad" style="width: 20%">
+                                      </div>
+                                  </div>
+                                      <br>
+                                  <div class="row">
+                                    <div class="col-sm-5">
+                                        <i class="fa fa-phone fa-lg" aria-hidden="true"></i>&nbsp;<input type="tel" name="usu_tlf" placeholder="Teléfono" maxlength="9" size="9">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-mobile fa-lg" aria-hidden="true"></i>&nbsp;<input type="tel" name="usu_movil" placeholder="Móvil" maxlength="9" size="9">
+                                    </div>
+                                    
+                                    
+                                  </div>    
+                                  <br>    
+                                  <div class="row">
+                                      <div class="col-sm-offset-5 col-sm-2">
+                                          <button class="btn btn-dark" name="add_user" style="height: 32px;">Registrarse</button>
+                                      </div>
+                                  </div>   
+                                      
+                                      
+                                      
+                                  </form>
+                                </div>
+                                
+                              </div>
+                              
+                            </div>
+                          </div>
     </header>
 
     <!-- About -->
@@ -170,7 +288,7 @@ echo "$body";
         <!-- /.container -->
     </section>
 
-    <section id="ejemplo" class="ejemplo" style="font-size: 15px;">
+    <section id="ejemplo" class="ejemplo" style="font-size: 15px;border-bottom: 3px solid black; border-top: 3px solid black;">
 
             <div class="ejemplo-panel">
                 <div class="ejemplo-panel-datos">
@@ -307,46 +425,26 @@ echo "$body";
     </section>
 
 
-    <section class="ejemplo">
-
-        <form>
-            <i class="fa fa-envelope fa-lg" aria-hidden="true"></i><input type="email" name="email" placeholder="Email">
-            <input type="type" name="">
-
-            <a id="comprobar" href="#">Comprobar</a>
-        </form> 
-        <p id="disponibilidad"></p>
-
-    </section>
+   
 
     <!-- Footer -->
-    <footer>
+    <footer style="background-color: #DC4A3D; height: 40%;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h4><strong>Start Bootstrap</strong>
+                    <h4><strong>My contacts</strong>
                     </h4>
-                    <p>3481 Melrose Place
-                        <br>Beverly Hills, CA 90210</p>
+                    <p>Calle Java es fácil
+                        <br>LibrosWeb, Bootstrap</p>
                     <ul class="list-unstyled">
-                        <li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li>
-                        <li><i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:name@example.com">name@example.com</a>
+                        <li><i class="fa fa-phone fa-fw"></i> 654 396 210</li>
+                        <li><i class="fa fa-envelope-o fa-fw"></i> name@example.com
                         </li>
                     </ul>
                     <br>
-                    <ul class="list-inline">
-                        <li>
-                            <a href="#"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>
-                        </li>
-                    </ul>
-                    <hr class="small">
-                    <p class="text-muted">Copyright &copy; Your Website 2014</p>
+                   
+                
+                    <p class="text-muted" style="color: white">Copyright &copy; MyContacts 2017</p>
                 </div>
             </div>
         </div>
