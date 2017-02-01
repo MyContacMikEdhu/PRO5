@@ -53,6 +53,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     <link rel="stylesheet" type="text/css" href="../css/main.css">
 
     <link rel="icon" type="image/png" href="img/icon.png">
+    <script type="text/javascript" src="../js/gmaps.js"></script>
     <script type="text/javascript">
 
       var marcas = [
@@ -82,9 +83,17 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                 }
         });
 }
+                var latitud;
+                var longitud;
+                var map;
+                var directionsDisplay;
+                var DirectionsService;
+              
 
      function initMap() {
- 
+                
+                var directionsService = new google.maps.DirectionsService;
+                var directionsDisplay = new google.maps.DirectionsRenderer;
                 var marca;
 
                  var map = new google.maps.Map(document.getElementById('map'), {
@@ -92,14 +101,49 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     center: {lat: 41.385064, lng: 2.173403}
                   });
 
-                
-
+                 
+                    
+                 
                   var bounds = new google.maps.LatLngBounds();
 
-                 var size = marcas.length -1
+                 
+                    function geolocalizar(){
+
+
+                       GMaps.geolocate({
+                        success: function(position){
+                            latitud = position.coords.latitude;
+                            longitud = position.coords.longitude;
+
+                            bounds.extend(new google.maps.LatLng(latitud, longitud));
+
+                            var infowindow = new google.maps.InfoWindow({
+                                  content: '<div>Estoy aqui</div>'
+                                  });
+
+                             var marker = new google.maps.Marker({
+                                    map: map,                                
+                                    position:  {lat: latitud, lng: longitud},
+                                    icon: '../img/yo.png',
+
+                                  });
+
+                              marker.addListener('click', function() {
+                                  infowindow.open(map, marker);
+
+                                  });
+
+                        },
+                    }); 
+
+                    }
+                    geolocalizar();
+
+                    var size = marcas.length -1
                     for (i=0, marca; marca=marcas[i]; i++){
                      geocodeAddress(map, marca, i, size, bounds);
                     }
+                    
                 }
 
                 function geocodeAddress(resultsMap, marca, i, size, bounds) {
@@ -120,7 +164,6 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
 
                                   var marker = new google.maps.Marker({
                                     map: resultsMap,
-                                    animation: google.maps.Animation.BOUNCE,
                                     position:  {lat: lat, lng: long},
                                     icon: marca.icon,
                                   });
@@ -131,19 +174,35 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
 
                                   marker.addListener('click', function() {
                                   infowindow.open(map, marker);
+                                  ruta(map, lat, long);
+
                                   });
 
                                 } else {
                                   alert('Geocode was not successful for the following reason: ' + status);
                                 }
                               });
-                          } else {
+                          } else {      
 
                           }
                                
 
                 }
 
+
+                function ruta(map, lat, long) {
+                    
+                    var flightPath = new google.maps.Polyline({
+                            path: flightPlanCoordinates,
+                            geodesic: true,
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 1.0,
+                            strokeWeight: 2
+                          });
+
+  flightPath.setMap(map);
+
+                }
 
                 function confirmar(){
                    var confirmar = confirm("Estas seguro de que quieres eliminar este contacto?");
@@ -244,10 +303,13 @@ $(document).ready(function(){
 });
 
 
+
     </script>
+
     <script id="script" async defer
-                      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSz41JPaWeB_ZMOLjiyhXQOwlLr4LYnOA&callback=initMap">
+                      src="https://maps.googleapis.com/maps/api/js?sensor=true&key=AIzaSyBSz41JPaWeB_ZMOLjiyhXQOwlLr4LYnOA&callback=initMap">
                     </script>
+
   </head>
   <body>
     <section id="ejemplo" class="ejemplo" style="font-size: 15px;">
