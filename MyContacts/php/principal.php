@@ -100,54 +100,61 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
       }*/
 
      function initMap() {
-                  
+ 
+                var marca;
 
                  var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 17,
-                    center: {lat: -34.397, lng: 150.644}
+                    zoom: 13,
+                    center: {lat: 41.385064, lng: 2.173403}
                   });
 
-                var geocoder = new google.maps.Geocoder();
-                  geocodeAddress(geocoder, map);
+                 var marcas = [
+                 {
+                    address: "<?php echo$direccion; ?>",
+                    icon: "../img/icon-casa.png",
+                    string: "<div><p>Mi Casa</p></div>"
+                 },{
+                    address: "<?php echo$direccion_trabajo; ?>",
+                    icon: "../img/icon-trabajo.png",
+                    string: "<div><p>Trabajo</p></div>"
+                 }
+                 ]; 
+
+                    for (i=0, marca; marca=marcas[i]; i++){
+                      var centro =  geocodeAddress(map, marca);
+                    }
                 }
 
-                function geocodeAddress(geocoder, resultsMap) {
-                  var address = ["<?php echo$direccion; ?>", "<?php echo$direccion_trabajo; ?>"];
-                  //var address1 = "<?php echo$direccion_trabajo; ?>";
-                  geocoder.geocode({'address': address}, function(results, status) {
-                    if (status === google.maps.GeocoderStatus.OK) {
-                      resultsMap.setCenter(results[0].geometry.location);
+                function geocodeAddress(resultsMap, marca) {
 
-                  var contentString = '<div><p>Mi Casa</p></div>';
+                        var geocoder = new google.maps.Geocoder();
+                              geocoder.geocode({'address': marca.address}, function(results, status) {
+                                if (status === google.maps.GeocoderStatus.OK) {
+                                var lat = results[0].geometry.location.lat();
+                                var long = results[0].geometry.location.lng();
 
+                                var contentString = marca.string;
 
-                      var infowindow = new google.maps.InfoWindow({
-                      content: contentString
-                      });
+                                  var infowindow = new google.maps.InfoWindow({
+                                  content: contentString
+                                  });
 
-                      var marker = new google.maps.Marker({
-                        map: resultsMap,
-                        animation: google.maps.Animation.BOUNCE,
-                        position: results[0].geometry.location,
-                        icon: "../img/icon-casa.png",
-                      });
+                                  var marker = new google.maps.Marker({
+                                    map: resultsMap,
+                                    animation: google.maps.Animation.BOUNCE,
+                                    position:  {lat: lat, lng: long},
+                                    icon: marca.icon,
+                                  });
 
-                      var marker1 = new google.maps.Marker({
-                        map: resultsMap,
-                        animation: google.maps.Animation.DROP,
-                        position: results[1].geometry.location,
-                        icon: "../img/icon-trabajo.png",
-                      });
+                                  marker.addListener('click', function() {
+                                  infowindow.open(map, marker);
+                                  });
 
+                                } else {
+                                  alert('Geocode was not successful for the following reason: ' + status);
+                                }
+                              });
 
-                      marker.addListener('click', function() {
-                      infowindow.open(map, marker);
-                      });
-
-                    } else {
-                      alert('Geocode was not successful for the following reason: ' + status);
-                    }
-                  });
                 }
 
 
