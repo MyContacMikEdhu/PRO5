@@ -25,7 +25,11 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     $telf = $usuario['usu_tlf'];
     $movil = $usuario['usu_movil'];
 	$direccion = $usuario['usu_dir_casa'];
+
     $dir_otro = $usuario['usu_dir_otro'];
+
+    $direccion_trabajo = $usuario['usu_dir_otro'];
+
 }
 ?>
 <!DOCTYPE html>
@@ -50,50 +54,115 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
 
     <link rel="icon" type="image/png" href="img/icon.png">
     <script type="text/javascript">
+        /*var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 16,
+          center: new google.maps.LatLng(-33.91722, 151.23064),
+          mapTypeId: 'roadmap'
+        });
 
-         function initMap() {
-                  
+        var icons = {
+          casa: {
+            icon: "../img/icon-casa.png"
+          },
+          trabajo: {
+            icon: "../img/icon-trabajo.png",
+          },
+          
+        };
+
+        function addMarker(feature) {
+            tipo = feature.type;
+            if (tipo=="casa"){
+                var animacion = google.maps.Animation.BOUNCE;
+            } else {
+                var animacion = google.maps.Animation.DROP;
+            }
+          var marker = new google.maps.Marker({
+            position: feature.local(),
+            icon: icons[feature.type].icon,
+            animation: animacion,
+            map: map
+          });
+        }
+
+        var features = [
+          {
+            type: 'casa',
+            local: new google.maps.Geocoder().geocode({
+                address: "<?php //echo$direccion; ?>"
+                }, function(results, status) {
+                      return results[0].geometry.location;
+                    }
+                )
+            }, {
+            address: "<?php //echo$direccion_trabajo; ?>",
+            type: 'trabajo'
+          }
+        ];
+
+        for (var i = 0, feature; feature = features[i]; i++) {
+          addMarker(feature);
+        }
+      }*/
+
+     function initMap() {
+ 
+                var marca;
 
                  var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 17,
-                    center: {lat: -34.397, lng: 150.644}
+                    zoom: 13,
+                    center: {lat: 41.385064, lng: 2.173403}
                   });
 
-                var geocoder = new google.maps.Geocoder();
-                  geocodeAddress(geocoder, map);
+                 var marcas = [
+                 {
+                    address: "<?php echo$direccion; ?>",
+                    icon: "../img/icon-casa.png",
+                    string: "<div><p>Mi Casa</p></div>"
+                 },{
+                    address: "<?php echo$direccion_trabajo; ?>",
+                    icon: "../img/icon-trabajo.png",
+                    string: "<div><p>Trabajo</p></div>"
+                 }
+                 ]; 
+
+                    for (i=0, marca; marca=marcas[i]; i++){
+                      var centro =  geocodeAddress(map, marca);
+                    }
                 }
 
-                function geocodeAddress(geocoder, resultsMap) {
-                  var address = "<?php echo$direccion; ?>";
-                  geocoder.geocode({'address': address}, function(results, status) {
-                    if (status === google.maps.GeocoderStatus.OK) {
-                      resultsMap.setCenter(results[0].geometry.location);
+                function geocodeAddress(resultsMap, marca) {
 
+                        var geocoder = new google.maps.Geocoder();
+                              geocoder.geocode({'address': marca.address}, function(results, status) {
+                                if (status === google.maps.GeocoderStatus.OK) {
+                                var lat = results[0].geometry.location.lat();
+                                var long = results[0].geometry.location.lng();
 
+                                var contentString = marca.string;
 
-                  var contentString = '<div><p>Mi Casa</p></div>';
+                                  var infowindow = new google.maps.InfoWindow({
+                                  content: contentString
+                                  });
 
+                                  var marker = new google.maps.Marker({
+                                    map: resultsMap,
+                                    animation: google.maps.Animation.BOUNCE,
+                                    position:  {lat: lat, lng: long},
+                                    icon: marca.icon,
+                                  });
 
-                      var infowindow = new google.maps.InfoWindow({
-                      content: contentString
-                      });
+                                  marker.addListener('click', function() {
+                                  infowindow.open(map, marker);
+                                  });
 
-                      var marker = new google.maps.Marker({
-                        map: resultsMap,
-                        animation: google.maps.Animation.BOUNCE,
-                        position: results[0].geometry.location,
-                        icon: "../img/icon-casa.png",
-                      });
+                                } else {
+                                  alert('Geocode was not successful for the following reason: ' + status);
+                                }
+                              });
 
-
-                      marker.addListener('click', function() {
-                      infowindow.open(map, marker);
-                      });
-
-                    } else {
-                      alert('Geocode was not successful for the following reason: ' + status);
-                    }
-                  });
                 }
 
 
@@ -132,6 +201,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                             return false;
                         }
                 }
+
 
                 function validar_eu(){
                     var formulario = document.getElementById("edit_user");
@@ -190,6 +260,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();   
 });
+
 
     </script>
     <script async defer

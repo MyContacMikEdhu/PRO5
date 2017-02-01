@@ -1,5 +1,6 @@
 <?php
     extract($_REQUEST);
+    $error_reg="";
 
     session_start();
 
