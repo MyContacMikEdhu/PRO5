@@ -22,5 +22,5 @@ while ($dato=mysqli_fetch_array($datos_contactos)) {
 
 }
 
-echo "marcas=[{address: '$casa', icon: '../img/icon-casa.png', string: '<div><p>Mi Casa</p></div>'}, {address: '$otro', icon: '../img/icon-trabajo.png', string: '<div><p>Trabajo</p></div>'}]";
+echo "marcas=[{address: '$casa', icon: '../img/icon-casa.png', string: '<div><p>Casa</p></div>'}, {address: '$otro', icon: '../img/icon-trabajo.png', string: '<div><p>Trabajo</p></div>'}]";
 ?>
