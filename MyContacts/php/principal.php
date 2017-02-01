@@ -157,7 +157,6 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                                     icon: marca.icon,
                                   });
                                   bounds.extend(new google.maps.LatLng(lat, long));
-                                  alert(bounds)
                                   if(i==size){
                                     resultsMap.fitBounds(bounds);
                                   }
