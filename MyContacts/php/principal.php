@@ -112,7 +112,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                 var marca;
 
                  var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 13,
+                    zoom: 15,
                     center: {lat: 41.385064, lng: 2.173403}
                   });
 
@@ -126,15 +126,18 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     icon: "../img/icon-trabajo.png",
                     string: "<div><p>Trabajo</p></div>"
                  }
-                 ]; 
+                 ];
 
+                  var bounds = new google.maps.LatLngBounds();
+
+                 var size = marcas.length -1
                     for (i=0, marca; marca=marcas[i]; i++){
-                      var centro =  geocodeAddress(map, marca);
+                     geocodeAddress(map, marca, i, size, bounds);
                     }
                 }
 
-                function geocodeAddress(resultsMap, marca) {
-
+                function geocodeAddress(resultsMap, marca, i, size, bounds) {
+                        
                         var geocoder = new google.maps.Geocoder();
                               geocoder.geocode({'address': marca.address}, function(results, status) {
                                 if (status === google.maps.GeocoderStatus.OK) {
@@ -153,6 +156,11 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                                     position:  {lat: lat, lng: long},
                                     icon: marca.icon,
                                   });
+                                  bounds.extend(new google.maps.LatLng(lat, long));
+                                  alert(bounds)
+                                  if(i==size){
+                                    resultsMap.fitBounds(bounds);
+                                  }
 
                                   marker.addListener('click', function() {
                                   infowindow.open(map, marker);
@@ -162,6 +170,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                                   alert('Geocode was not successful for the following reason: ' + status);
                                 }
                               });
+                               
 
                 }
 
