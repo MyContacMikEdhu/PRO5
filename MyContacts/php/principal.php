@@ -59,11 +59,11 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                  {
                     address: "<?php echo$direccion; ?>",
                     icon: "../img/icon-casa.png",
-                    string: "<div><p>Mi Casa</p></div>"
+                    string: "<div><p>Mi Casa <br><?php echo$direccion; ?></p></div>"
                  },{
                     address: "<?php echo$direccion_trabajo; ?>",
                     icon: "../img/icon-trabajo.png",
-                    string: "<div><p>Trabajo</p></div>"
+                    string: "<div><p>Mi Trabajo <br><?php echo$direccion_trabajo; ?></p></div>"
                  }
                  ];
 
