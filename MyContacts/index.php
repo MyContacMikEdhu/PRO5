@@ -32,6 +32,8 @@ if (isset($_SESSION['usu_id'])){
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
+    <link rel="icon" type="image/png" href="img/icon.png">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -125,6 +127,13 @@ if (isset($_SESSION['usu_id'])){
                 msg += "\n El correo es obligatorio";
             }
 
+                        var pass = formulario.usu_pass.value;
+                        var pass1 = formulario.usu_pass1.value;
+                        if (pass != pass1){
+                            msg += "\n Las contraseñas deben coincidir";
+                            //document.getElementById("form1").usu_correo.style.borderColor = "red";
+                        }
+
             if (formulario.usu_pass.value==""){
                 msg += "\n La contraseña es obligatoria";
             }
@@ -195,7 +204,7 @@ echo "$body";
 
         </div>
         <div class="modal fade" id="myModal" role="dialog" style="font-size: 15px">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog" style="width: 49%; text-align: center;">
                             
                               <!-- Modal content-->
                               <div class="modal-content">
@@ -203,17 +212,18 @@ echo "$body";
                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                                   <h4 class="modal-title">Registrarse</h4>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" >
                                 <p>Los campos (*) son obligatorios...</p><br>
                                   <form id="new_user" action="php/newuser.proc.php" method="POST" onsubmit="return validar_nu();">
                                   
                                   <div class="row">
                                      
-                                      <div class="col-sm-6">
-                                          <i class="fa fa-at fa-lg" aria-hidden="true"></i>&nbsp;<input type="email" name="usu_correo" placeholder="Email" style="width: 89%">*
+                                      <div class="col-sm-5">
+                                          <i class="fa fa-at fa-lg" aria-hidden="true"></i>&nbsp;<input type="email" name="usu_correo" placeholder="Email" style="width: 85%">*
                                       </div> 
-                                      <div class="col-sm-6">
-                                          <i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;<input type="password" name="usu_pass" placeholder="Contraseña" style="width: 85%">*
+                                      <div class="col-sm-7">
+                                          <i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;<input type="password" name="usu_pass" placeholder="Contraseña" style="width: 40%">
+                                          <input type="password" name="usu_pass1" placeholder="Confirmar contraseña" style="width: 43%">*
                                       </div>
                                   </div>
                                   <br>
@@ -223,7 +233,7 @@ echo "$body";
                                           <i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;<input type="text" name="usu_nombre" placeholder="Nombre" style="width: 90%">*
                                       </div> 
                                       <div class="col-sm-6">
-                                          <input type="text" name="usu_apellidos" placeholder="Apellidos" style="width: 95%" maxlength="35">*
+                                          <input type="text" name="usu_apellidos" placeholder="Apellidos" style="width: 90%" maxlength="35">*
                                       </div>
                                   </div>
                                   <br>
@@ -395,7 +405,13 @@ echo "$body";
                     </div>
                     <div class="ejemplo-panel-contactos-grupo">
                         <i class="fa fa-users " aria-hidden="true"></i>&nbsp;Otro
+                        
                     </div>
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <br><br><br>
+                    <p style="width: 50%; text-align: center; color: red;"><b>ESTO ES UNA RECREACIÓN DE NUESTRA APP WEB :)</b></p>
+                    </div>
+                    
                 </div>
             </div>
 

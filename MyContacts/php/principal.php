@@ -21,8 +21,11 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     $nombre = $usuario['usu_nombre'];
     $apellido = $usuario['usu_apellidos'];
     $email = $usuario['usu_correo'];
+    $pass = $usuario['usu_pass'];
+    $telf = $usuario['usu_tlf'];
     $movil = $usuario['usu_movil'];
 	$direccion = $usuario['usu_dir_casa'];
+    $dir_otro = $usuario['usu_dir_otro'];
 }
 ?>
 <!DOCTYPE html>
@@ -44,6 +47,8 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
+
+    <link rel="icon" type="image/png" href="img/icon.png">
     <script type="text/javascript">
 
          function initMap() {
@@ -128,51 +133,63 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                         }
                 }
 
-        /*var READY_STATE_COMPLETE=4;
+                function validar_eu(){
+                    var formulario = document.getElementById("edit_user");
+                        var msg="Error:";
+                        var pass = formulario.usu_pass.value;
+                        var pass1 = formulario.usu_pass1.value;
+                        if (pass != pass1){
+                            msg += "\n Las contraseñas deben coincidir";
+                            //document.getElementById("form1").usu_correo.style.borderColor = "red";
+                        }
 
-        var peticion_http = null;
-         
-        function inicializa_xhr() {
-          if(window.XMLHttpRequest) {
-            return new XMLHttpRequest(); 
-          }
-          else if(window.ActiveXObject) {
-            return new ActiveXObject("Microsoft.XMLHTTP");
-          } 
-        }
-         
-        function crea_query_string() {
-          var busca = document.getElementById("buscador"); 
-          return "palabra=" + encodeURIComponent(busca.value);
-            
-        }
-         
-        function buscar() {
-          peticion_http = inicializa_xhr();
-          if(peticion_http) {
-            peticion_http.onreadystatechange = procesaRespuesta;
-            peticion_http.open("POST", "buscar.php", true);
-         
-            peticion_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            var query_string = crea_query_string();
-            peticion_http.send(query_string);
-          }
-        }
-         
-        function procesaRespuesta() {
-          if(peticion_http.readyState == READY_STATE_COMPLETE) {
-            if(peticion_http.status == 200) {
-              document.getElementById("contenido-contactos").innerHTML = peticion_http.responseText;
-            }
-          }
-        }
-         
-        function buscador(){
+                        
+                    if (msg == "Error:"){
+                        return true;
+                        } else{
+                            alert(msg);
+                            return false;
+                        }
+                }
 
-            document.getElementById("buscador").onclick = buscar();
+    function realizaProceso(contid){
+        var parametros = {
+                "cont_id" : contid,
 
-        };*/
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'modal.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#myModal3").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                        $("#myModal3").html(response);
+                }
+        });
+}
 
+ function tomarDatos(contactoid){
+        var parametros = {
+                "cont_id" : contactoid,
+
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'datos_contactos.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#datos").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                        $("#datos").html(response);
+                }
+        });
+}
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});
 
     </script>
     <script async defer
@@ -271,10 +288,10 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<a class='cont-sel' href=''><div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href='#' onclick='tomarDatos($familia[cont_id]);return false;'><div class='col-sm-offset-1 col-sm-8'>";
                             echo "$familia[cont_nombre]";
-                            echo "</div></a>";
-                            echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo "</div></a>";       
+                            echo "<a href='#' data-toggle='modal' data-target='#myModal3' id='edit' onclick='realizaProceso($familia[cont_id]);return false;'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
                             echo "</div></a>";
                             echo "<a href='eliminar.proc.php?id=$familia[cont_id]' onclick='return confirmar()'><div class='col-sm-1'>";
@@ -297,10 +314,10 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<a class='cont-sel' href=''><div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href='#'><div class='col-sm-offset-1 col-sm-8'>";
                             echo "$familia[cont_nombre]";
                             echo "</div></a>";
-                            echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo "<a href='#' data-toggle='modal' data-target='#myModal3' id='edit' onclick='realizaProceso($familia[cont_id]);return false;'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
                             echo "</div></a>";
                             echo "<a href='eliminar.proc.php?id=$familia[cont_id]' onclick='return confirmar()'><div class='col-sm-1'>";
@@ -322,10 +339,10 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<a class='cont-sel' href=''><div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href='#'><div class='col-sm-offset-1 col-sm-8'>";
                             echo "$familia[cont_nombre]";
                             echo "</div></a>";
-                            echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo "<a href='#' data-toggle='modal' data-target='#myModal3' id='edit' onclick='realizaProceso($familia[cont_id]);return false;'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
                             echo "</div></a>";
                             echo "<a href='eliminar.proc.php?id=$familia[cont_id]' onclick='return confirmar()'><div class='col-sm-1'>";
@@ -347,10 +364,10 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<a class='cont-sel' href=''><div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href='#'><div class='col-sm-offset-1 col-sm-8'>";
                             echo "$familia[cont_nombre]";
                             echo "</div></a>";
-                            echo "<a href='modificar.php?id=$familia[cont_id]'><div class='col-sm-1'>";
+                            echo "<a href='#' data-toggle='modal' data-target='#myModal3' id='edit' onclick='realizaProceso($familia[cont_id]);return false;'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
                             echo "</div></a>";
                             echo "<a href='eliminar.proc.php?id=$familia[cont_id]' onclick='return confirmar()' ><div class='col-sm-1'>";
@@ -362,11 +379,14 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     }
 ?>
                 </div>
+
+               
 <?php
     }
 ?>
             </div>
-            
+            <div class="modal fade" id="myModal3" role="dialog" style="font-size: 15px">
+</div>
 
             <div class="ejemplo-geo">
                 <div class="ejemplo-geo-opciones">
@@ -382,7 +402,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                             
                               <!-- Modal content-->
                               <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header" style="text-align: center;">
                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                                   <h4 class="modal-title">Agregar Contacto</h4>
                                 </div>
@@ -470,47 +490,53 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                     </div>
 
                     <div class="modal fade" id="myModal2" role="dialog" style="font-size: 15px">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog" style="width: 49%;text-align: center;">
                             
                               <!-- Modal content-->
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                  <h4 class="modal-title">Editar cuenta</h4>
+                                  <h4 class="modal-title">Editar cuenta</h4><p><?php echo$email; ?></p>
                                 </div>
-                                <div class="modal-body">
-                                  <form id="new_user" action="php/newuser.proc.php" method="POST" onsubmit="return validar_nu();">
+                                <div class="modal-body" >
+                                  <form id="edit_user" action="edituser.proc.php" method="POST" onsubmit="return validar_eu();">
                                   
                                   <div class="row">
                                      
-                                      <div class="col-sm-6">
-                                          <i class="fa fa-at fa-lg" aria-hidden="true"></i>&nbsp;<input type="email" name="usu_correo" placeholder="Email" style="width: 89%">*
-                                      </div> 
-                                      <div class="col-sm-6">
-                                          <i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;<input type="password" name="usu_pass" placeholder="Contraseña" style="width: 85%">*
+                                      
+                                          <input type="hidden" name="usu_correo" value="<?php echo$email; ?>">
+                                        
+                                      <div class="col-sm-12">
+                                          <i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;<input type="password" name="usu_pass" placeholder="Contraseña" style="width: 40%">
+                                      
+                                          <input type="password" name="usu_pass1" placeholder="Confirmar contraseña" style="width: 52%">
                                       </div>
                                   </div>
                                   <br>
                                   <div class="row">
                                      
-                                      <div class="col-sm-6">
-                                          <i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;<input type="text" name="usu_nombre" placeholder="Nombre" style="width: 90%">*
-                                      </div> 
-                                      <div class="col-sm-6">
-                                          <input type="text" name="usu_apellidos" placeholder="Apellidos" style="width: 95%" maxlength="35">*
+                                      <div class="col-sm-12">
+                                          <i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;<input type="text" name="usu_nombre" placeholder="Nombre" style="width: 40%" value="<?php echo$nombre; ?>">
+                                      
+                                          <input type="text" name="usu_apellidos" placeholder="Apellidos" style="width: 52%" maxlength="35" value="<?php echo$apellido; ?>">
                                       </div>
                                   </div>
                                   <br>
+                                 <p style="text-align: left; color: grey;"><?php echo$direccion; ?></p>
+
                                   <div class="row">
                                       <div class="col-sm-12">
+                                      
                                       <i class="fa fa-home fa-lg" aria-hidden="true"></i>
-                                        <input type="text" name="calle_casa" placeholder="Dirección casa" style="width: 30%">
+                                        <input type="text" id="calle_casa" name="calle_casa" placeholder="Dirección casa" style="width: 30%">
                                         <input type="number" name="num_casa" placeholder="Núm." style="width: 10%">
                                         <input type="text" name="local_casa" placeholder="Localidad" style="width: 30%">
-                                        <input type="text" name="ciudad_casa" placeholder="Ciudad" style="width: 20%">*
+                                        <input type="text" name="ciudad_casa" placeholder="Ciudad" style="width: 20%">
+                                        <input type="hidden" name="dir_casa" value="<?php echo$direccion; ?>">
                                       </div>
                                   </div>
                                   <br>
+                                  <p style="text-align: left; color: grey;"><?php echo$dir_otro; ?></p>
                                   <div class="row">
                                       <div class="col-sm-12">
                                       <i class="fa fa-building-o fa-lg" aria-hidden="true"></i>&nbsp;
@@ -518,14 +544,15 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                                         <input type="number" name="num_otro" placeholder="Núm." style="width: 10%">
                                         <input type="text" name="local_otro" placeholder="Localidad" style="width: 30%">
                                         <input type="text" name="ciudad_otro" placeholder="Ciudad" style="width: 20%">
+                                        <input type="hidden" name="otro_dir" value="<?php echo$dir_otro; ?>">
                                       </div>
                                   </div>
                                       <br>
                                   <div class="row">
                                     <div class="col-sm-5">
-                                        <i class="fa fa-phone fa-lg" aria-hidden="true"></i>&nbsp;<input type="tel" name="usu_tlf" placeholder="Teléfono" maxlength="9" size="9">
+                                        <i class="fa fa-phone fa-lg" aria-hidden="true"></i>&nbsp;<input type="tel" name="usu_tlf" placeholder="Teléfono" maxlength="9" size="9" value="<?php echo$telf; ?>">
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="fa fa-mobile fa-lg" aria-hidden="true"></i>&nbsp;<input type="tel" name="usu_movil" placeholder="Móvil" maxlength="9" size="9">
+                                        <i class="fa fa-mobile fa-lg" aria-hidden="true"></i>&nbsp;<input type="tel" name="usu_movil" placeholder="Móvil" maxlength="9" size="9" value="<?php echo$movil; ?>">
                                     </div>
                                     
                                     
@@ -533,7 +560,8 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                                   <br>    
                                   <div class="row">
                                       <div class="col-sm-offset-5 col-sm-2">
-                                          <button class="btn btn-dark" name="add_user" style="height: 32px;">Registrarse</button>
+                                      <input type="hidden" name="password" value="<?php echo$pass; ?>">
+                                          <button class="btn btn-dark" name="add_user" style="height: 32px;">Guardar</button>
                                       </div>
                                   </div>   
                                       
@@ -550,7 +578,9 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                          <a href="logout.proc.php" class="btn btn-exit"  style="height: 32px;"><i class="fa fa-power-off fa-lg" aria-hidden="true"></i>&nbsp;Cerrar sesión</a>
                     </div>
                 </div>
+<div id="datos">
 
+</div>
                 <div id="map" class="ejemplo-geo-mapa">
                     
                 </div>
