@@ -220,6 +220,25 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
         });
 }
 
+    function realizaProceso2(contid){
+        var parametros = {
+                "cont_id" : contid,
+
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'contacto.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#datoscontacto").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                        $("#datoscontacto").html(response);
+                }
+        });
+}
+
+
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();   
 });
@@ -234,7 +253,7 @@ $(document).ready(function(){
     <section id="ejemplo" class="ejemplo" style="font-size: 15px;">
 
             <div class="ejemplo-panel">
-                <div class="ejemplo-panel-datos">
+                <div class="ejemplo-panel-datos" style="background-color: #EFF0F1">
                     <div style="width: 30%; height: 100%; float: left; padding-top: 10%; padding-left: 10%;">
                         <div class="circulo">
                             <?php echo strtoupper($nombre[0]); ?>
@@ -322,8 +341,11 @@ $(document).ready(function(){
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<a class='cont-sel' href='#' onclick='tomarDatos($familia[cont_id]);return false;'><div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href='#' onclick='tomarDatos($familia[cont_id]);return false;'><div class='col-sm-offset-1 col-sm-7'>";
                             echo "$familia[cont_nombre]";
+                            echo "</div></a>";
+                            echo "<a href='#' data-toggle='modal' data-target='#datoscontacto' id='edit' onclick='realizaProceso2($familia[cont_id]);return false;'><div class='col-sm-1'>";
+                            echo  "<i class='fa fa-info-circle fa-lg' aria-hidden='true' title='Info'></i>";
                             echo "</div></a>";       
                             echo "<a href='#' data-toggle='modal' data-target='#myModal3' id='edit' onclick='realizaProceso($familia[cont_id]);return false;'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
@@ -348,8 +370,11 @@ $(document).ready(function(){
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<a class='cont-sel' href='#' onclick='tomarDatos($familia[cont_id]);return false;'><div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href='#' onclick='tomarDatos($familia[cont_id]);return false;'><div class='col-sm-offset-1 col-sm-7'>";
                             echo "$familia[cont_nombre]";
+                            echo "</div></a>";
+                             echo "<a href='#' data-toggle='modal' data-target='#datoscontacto' id='edit' onclick='realizaProceso2($familia[cont_id]);return false;'><div class='col-sm-1'>";
+                            echo  "<i class='fa fa-info-circle fa-lg' aria-hidden='true' title='Info'></i>";
                             echo "</div></a>";
                             echo "<a href='#' data-toggle='modal' data-target='#myModal3' id='edit' onclick='realizaProceso($familia[cont_id]);return false;'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
@@ -373,8 +398,11 @@ $(document).ready(function(){
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<a class='cont-sel' href='#' onclick='tomarDatos($familia[cont_id]);return false;'><div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href='#' onclick='tomarDatos($familia[cont_id]);return false;'><div class='col-sm-offset-1 col-sm-7'>";
                             echo "$familia[cont_nombre]";
+                            echo "</div></a>";
+                             echo "<a href='#' data-toggle='modal' data-target='#datoscontacto' id='edit' onclick='realizaProceso2($familia[cont_id]);return false;'><div class='col-sm-1'>";
+                            echo  "<i class='fa fa-info-circle fa-lg' aria-hidden='true' title='Info'></i>";
                             echo "</div></a>";
                             echo "<a href='#' data-toggle='modal' data-target='#myModal3' id='edit' onclick='realizaProceso($familia[cont_id]);return false;'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
@@ -398,8 +426,11 @@ $(document).ready(function(){
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<a class='cont-sel' href='#' onclick='tomarDatos($familia[cont_id]);return false;'><div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href='#' onclick='tomarDatos($familia[cont_id]);return false;'><div class='col-sm-offset-1 col-sm-7'>";
                             echo "$familia[cont_nombre]";
+                            echo "</div></a>";
+                             echo "<a href='#' data-toggle='modal' data-target='#datoscontacto' id='edit' onclick='realizaProceso2($familia[cont_id]);return false;'><div class='col-sm-1'>";
+                            echo  "<i class='fa fa-info-circle fa-lg' aria-hidden='true' title='Info'></i>";
                             echo "</div></a>";
                             echo "<a href='#' data-toggle='modal' data-target='#myModal3' id='edit' onclick='realizaProceso($familia[cont_id]);return false;'><div class='col-sm-1'>";
                             echo  "<i class='fa fa-pencil fa-lg' aria-hidden='true' title='Editar'></i>";
@@ -612,9 +643,11 @@ $(document).ready(function(){
                          <a href="logout.proc.php" class="btn btn-exit"  style="height: 32px;"><i class="fa fa-power-off fa-lg" aria-hidden="true"></i>&nbsp;Cerrar sesión</a>
                     </div>
                 </div>
-<div id="datos">
 
+<div class="modal fade" id="datoscontacto" role="dialog">
 </div>
+
+
                 <div id="map" class="ejemplo-geo-mapa">
                     
                 </div>

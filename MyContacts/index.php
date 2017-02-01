@@ -302,7 +302,7 @@ echo "$body";
     <section id="ejemplo" class="ejemplo" style="font-size: 15px;border-bottom: 3px solid black; border-top: 3px solid black;">
 
             <div class="ejemplo-panel">
-                <div class="ejemplo-panel-datos">
+                <div class="ejemplo-panel-datos" style="background-color: #EFF0F1">
                     <div style="width: 30%; height: 100%; float: left; padding-top: 10%; padding-left: 10%;">
                         <div class="circulo">
                             M
@@ -349,7 +349,7 @@ echo "$body";
                 <div class="ejemplo-panel-opcion">
                 <br>
                    <div class="col-sm-offset-1 col-sm-11">
-                        <form>
+                        <form action="#ejemplo">
                         &nbsp;&nbsp;&nbsp;
                            <input type="text" name="buscar" placeholder="Buscar" style="width:60%;height: 32px;">
                            <button class="btn btn-dark" name="entrar" style="height: 32px;"><i class="fa fa-search" aria-hidden="true"></i></button>
