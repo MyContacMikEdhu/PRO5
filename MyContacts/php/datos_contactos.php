@@ -19,24 +19,8 @@ while ($dato=mysqli_fetch_array($datos_contactos)) {
   $movil = $dato['cont_movil'];
   $tipo = $dato['cont_tipo'];
   $bday = $dato['cont_fecha_n'];
+
 }
+
+echo "marcas=[{address: '$casa', icon: '../img/icon-casa.png', string: '<div><p>Mi Casa</p></div>'}, {address: '$otro', icon: '../img/icon-trabajo.png', string: '<div><p>Trabajo</p></div>'}]";
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-<table>
-<tr><?php echo$nombre; ?></tr><br>
-<tr><?php echo$correo; ?></tr><br>
-<tr><?php echo$casa; ?></tr><br>
-<tr><?php echo$otro; ?></tr><br>
-<tr><?php echo$tlf; ?></tr><br>
-<tr><?php echo$movil; ?></tr><br>
-<tr><?php echo$tipo; ?></tr><br>
-<tr><?php echo$bday; ?></tr>
-	
-</table>
-</body>
-</html>

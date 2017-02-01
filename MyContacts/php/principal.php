@@ -54,69 +54,8 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
 
     <link rel="icon" type="image/png" href="img/icon.png">
     <script type="text/javascript">
-        /*var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 16,
-          center: new google.maps.LatLng(-33.91722, 151.23064),
-          mapTypeId: 'roadmap'
-        });
 
-        var icons = {
-          casa: {
-            icon: "../img/icon-casa.png"
-          },
-          trabajo: {
-            icon: "../img/icon-trabajo.png",
-          },
-          
-        };
-
-        function addMarker(feature) {
-            tipo = feature.type;
-            if (tipo=="casa"){
-                var animacion = google.maps.Animation.BOUNCE;
-            } else {
-                var animacion = google.maps.Animation.DROP;
-            }
-          var marker = new google.maps.Marker({
-            position: feature.local(),
-            icon: icons[feature.type].icon,
-            animation: animacion,
-            map: map
-          });
-        }
-
-        var features = [
-          {
-            type: 'casa',
-            local: new google.maps.Geocoder().geocode({
-                address: "<?php //echo$direccion; ?>"
-                }, function(results, status) {
-                      return results[0].geometry.location;
-                    }
-                )
-            }, {
-            address: "<?php //echo$direccion_trabajo; ?>",
-            type: 'trabajo'
-          }
-        ];
-
-        for (var i = 0, feature; feature = features[i]; i++) {
-          addMarker(feature);
-        }
-      }*/
-
-     function initMap() {
- 
-                var marca;
-
-                 var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 15,
-                    center: {lat: 41.385064, lng: 2.173403}
-                  });
-
-                 var marcas = [
+      var marcas = [
                  {
                     address: "<?php echo$direccion; ?>",
                     icon: "../img/icon-casa.png",
@@ -128,6 +67,33 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                  }
                  ];
 
+    function tomarDatos(contactoid){
+        var parametros = {
+                "cont_id" : contactoid,
+
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'datos_contactos.php',
+                type:  'post',
+                success:  function (response) {
+                        eval('(' + response + ')');
+                        initMap();
+                }
+        });
+}
+
+     function initMap() {
+ 
+                var marca;
+
+                 var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 15,
+                    center: {lat: 41.385064, lng: 2.173403}
+                  });
+
+                
+
                   var bounds = new google.maps.LatLngBounds();
 
                  var size = marcas.length -1
@@ -137,12 +103,14 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                 }
 
                 function geocodeAddress(resultsMap, marca, i, size, bounds) {
-                        
+                        if (marca.address!=""){
                         var geocoder = new google.maps.Geocoder();
                               geocoder.geocode({'address': marca.address}, function(results, status) {
                                 if (status === google.maps.GeocoderStatus.OK) {
                                 var lat = results[0].geometry.location.lat();
                                 var long = results[0].geometry.location.lng();
+
+                                resultsMap.setCenter({lat: lat, lng: long});
 
                                 var contentString = marca.string;
 
@@ -169,6 +137,9 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                                   alert('Geocode was not successful for the following reason: ' + status);
                                 }
                               });
+                          } else {
+
+                          }
                                
 
                 }
@@ -229,6 +200,7 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
                             return false;
                         }
                 }
+                        
 
     function realizaProceso(contid){
         var parametros = {
@@ -248,30 +220,13 @@ while ($usuario=mysqli_fetch_array($usuarios)) {
         });
 }
 
- function tomarDatos(contactoid){
-        var parametros = {
-                "cont_id" : contactoid,
-
-        };
-        $.ajax({
-                data:  parametros,
-                url:   'datos_contactos.php',
-                type:  'post',
-                beforeSend: function () {
-                        $("#datos").html("Procesando, espere por favor...");
-                },
-                success:  function (response) {
-                        $("#datos").html(response);
-                }
-        });
-}
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();   
 });
 
 
     </script>
-    <script async defer
+    <script id="script" async defer
                       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSz41JPaWeB_ZMOLjiyhXQOwlLr4LYnOA&callback=initMap">
                     </script>
   </head>
@@ -393,7 +348,7 @@ $(document).ready(function(){
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<a class='cont-sel' href='#'><div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href='#' onclick='tomarDatos($familia[cont_id]);return false;'><div class='col-sm-offset-1 col-sm-8'>";
                             echo "$familia[cont_nombre]";
                             echo "</div></a>";
                             echo "<a href='#' data-toggle='modal' data-target='#myModal3' id='edit' onclick='realizaProceso($familia[cont_id]);return false;'><div class='col-sm-1'>";
@@ -418,7 +373,7 @@ $(document).ready(function(){
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<a class='cont-sel' href='#'><div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href='#' onclick='tomarDatos($familia[cont_id]);return false;'><div class='col-sm-offset-1 col-sm-8'>";
                             echo "$familia[cont_nombre]";
                             echo "</div></a>";
                             echo "<a href='#' data-toggle='modal' data-target='#myModal3' id='edit' onclick='realizaProceso($familia[cont_id]);return false;'><div class='col-sm-1'>";
@@ -443,7 +398,7 @@ $(document).ready(function(){
                     while ($familia = mysqli_fetch_array($familias)) {
                       
                             echo "<div class='ejemplo-panel-contactos-contacto'>";
-                            echo "<a class='cont-sel' href='#'><div class='col-sm-offset-1 col-sm-8'>";
+                            echo "<a class='cont-sel' href='#' onclick='tomarDatos($familia[cont_id]);return false;'><div class='col-sm-offset-1 col-sm-8'>";
                             echo "$familia[cont_nombre]";
                             echo "</div></a>";
                             echo "<a href='#' data-toggle='modal' data-target='#myModal3' id='edit' onclick='realizaProceso($familia[cont_id]);return false;'><div class='col-sm-1'>";
